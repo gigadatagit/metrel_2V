@@ -25,6 +25,8 @@ def enviar_codigo_mailjet(destinatario, nombre_destinatario, codigo_verificacion
     mensaje = "Estimad@ Usuari@, en el siguiente correo encontrará el código de acceso para la App." 
     # Si el código es una cadena de 6 dígitos, lo convertimos en lista para mostrar cada dígito en una caja 
     listado_Codigo = [d for d in codigo_verificacion] 
+    
+    print(f"Código de Verificación: {listado_Codigo}")
      
     mensaje_HTML = f""" 
     <html> 
