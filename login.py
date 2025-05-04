@@ -314,6 +314,8 @@ def generarLogin(archivo):
                     # Credenciales correctas: generamos el código de verificación
                     codigo_verificacion = ''.join(random.choices("0123456789", k=6))
                     
+                    print(f"Código de Verificación: {codigo_verificacion}")
+                    
                     st.session_state['pending_user'] = parUsuario
                     st.session_state['verification_code'] = codigo_verificacion
                     # Envío del correo mediante Mailjet:
