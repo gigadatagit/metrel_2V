@@ -25,8 +25,6 @@ def enviar_codigo_mailjet(destinatario, nombre_destinatario, codigo_verificacion
     mensaje = "Estimad@ Usuari@, en el siguiente correo encontrará el código de acceso para la App." 
     # Si el código es una cadena de 6 dígitos, lo convertimos en lista para mostrar cada dígito en una caja 
     listado_Codigo = [d for d in codigo_verificacion] 
-    
-    print(f"Código de Verificación: {listado_Codigo}")
      
     mensaje_HTML = f""" 
     <html> 
@@ -190,7 +188,7 @@ def validarPagina(pagina,usuario):
     # Cargamos la información de usuarios y roles
     dfusuarios = query_to_df("SELECT * FROM viewinfousuarios;")
     
-    dfPaginas = query_to_df("SELECT * FROM info_paginas;")
+    dfPaginas = query_to_df("SELECT * FROM info_paginas_metrel;")
     
     dfUsuario = dfusuarios[(dfusuarios['correo_electronico']==usuario)]
 
@@ -216,7 +214,7 @@ def generarMenuRoles(usuario):
     with st.sidebar: # Menú lateral
         # Cargamos la tabla de usuarios y páginas
         dfusuarios = query_to_df("SELECT * FROM viewinfousuarios;")
-        dfPaginas = query_to_df("SELECT * FROM info_paginas ORDER BY id_pagina ASC;")
+        dfPaginas = query_to_df("SELECT * FROM info_paginas_metrel ORDER BY id_pagina ASC;")
 
         # Filtramos la tabla de usuarios por el usuario actual
         dfUsuario =dfusuarios[(dfusuarios['correo_electronico']==usuario)]
@@ -315,8 +313,6 @@ def generarLogin(archivo):
 
                     # Credenciales correctas: generamos el código de verificación
                     codigo_verificacion = ''.join(random.choices("0123456789", k=6))
-                    
-                    print(f"Código de Verificación: {codigo_verificacion}")
                     
                     st.session_state['pending_user'] = parUsuario
                     st.session_state['verification_code'] = codigo_verificacion
