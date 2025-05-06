@@ -3,7 +3,7 @@ import login as login
 
 archivo = __file__.split("/")[-1]
 login.generarLogin(archivo)
-if 'usuario' in st.session_state:
+if 'correo_electronico' in st.session_state:
     st.header('Información | :orange[Página Principal]')
     
     st.markdown("""

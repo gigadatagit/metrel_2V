@@ -15,7 +15,7 @@ from utilities import calcular_Valor_Tension_Nominal, calcular_Valor_Corriente_N
 
 archivo = __file__.split("/")[-1]
 login.generarLogin(archivo)
-if 'usuario' in st.session_state:
+if 'correo_electronico' in st.session_state:
     st.header('Información | :orange[Página de Generación de Informes de Calidad de Energía]')
     
     uploaded_file = st.file_uploader("Elige un archivo de Parquet", type=["parquet"])

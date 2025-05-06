@@ -89,8 +89,8 @@ def enviar_codigo_mailjet(destinatario, nombre_destinatario, codigo_verificacion
       'Messages': [ 
                     { 
                         "From": { 
-                            "Email": "juan.vergara@mejiaacevedo.com.co", 
-                            "Name": "Juan Daniel Vergara" 
+                            "Email": "jvergara@gigaelectro.co", 
+                            "Name": "Autenticacion GIGA" 
                         }, 
                         "To": [ 
                                 { 
@@ -98,7 +98,7 @@ def enviar_codigo_mailjet(destinatario, nombre_destinatario, codigo_verificacion
                                     "Name": nombre_destinatario 
                                 } 
                         ], 
-                        "Subject": "Código de Autenticación | Tableros Power BI App", 
+                        "Subject": "Código de Autenticación | Metrel App", 
                         "TextPart": mensaje, 
                         "HTMLPart": mensaje_HTML 
                     } 
