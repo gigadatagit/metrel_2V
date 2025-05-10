@@ -1,9 +1,16 @@
 import streamlit as st
 import login as login
+from bd import query_to_df
 
 archivo = __file__.split("/")[-1]
 login.generarLogin(archivo)
 if 'correo_electronico' in st.session_state:
-    st.header('Información | :orange[Página de Listado de Usuarios]')
+    st.subheader('Información | :orange[Listado de Usuarios]')
     
-    uploaded_file = st.file_uploader("Elige un archivo de Parquet", type=["parquet"])
+    df_Listado_Usuarios = query_to_df("SELECT * FROM viewinfousuarios;")
+    
+    st.markdown("""
+    > ## Tabla con el Listado de Usuarios       
+    """)
+    
+    st.dataframe(df_Listado_Usuarios)

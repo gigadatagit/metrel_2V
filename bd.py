@@ -38,13 +38,13 @@ def execute_query(query, params=None):
 def get_usuarios():
     return query_to_df("SELECT * FROM info_usuario WHERE activo='S';")
 
-def create_usuario(nombre_completo, numero_celular, correo_electronico, numero_documento, id_tipo_documento, id_proyecto, id_rol):
-    query = "INSERT INTO info_usuario (nombre_completo, numero_celular, correo_electronico, numero_documento, id_tipo_documento, id_proyecto, id_rol) VALUES (:nombre_completo, :numero_celular, :correo_electronico, :numero_documento, :id_tipo_documento, :id_proyecto, :id_rol)"
-    execute_query(query,{"nombre_completo": nombre_completo, "numero_celular": numero_celular, "correo_electronico": correo_electronico, "numero_documento": numero_documento, "id_tipo_documento": id_tipo_documento, "id_proyecto": id_proyecto, "id_rol": id_rol})
+def create_usuario(nombre_completo, numero_celular, correo_electronico, numero_documento, id_tipo_documento, id_rol):
+    query = "INSERT INTO info_usuario (nombre_completo, numero_celular, correo_electronico, numero_documento, id_tipo_documento, id_rol) VALUES (:nombre_completo, :numero_celular, :correo_electronico, :numero_documento, :id_tipo_documento, :id_rol)"
+    execute_query(query,{"nombre_completo": nombre_completo, "numero_celular": numero_celular, "correo_electronico": correo_electronico, "numero_documento": numero_documento, "id_tipo_documento": id_tipo_documento, "id_rol": id_rol})
 
-def update_usuario(id_usuario, nuevo_nombre_completo, nuevo_numero_celular, nuevo_correo_electronico, nuevo_numero_documento, nuevo_id_tipo_documento, nuevo_id_proyecto, nuevo_id_rol):
-    query= "UPDATE info_usuario SET nombre_completo = :nuevo_nombre_completo, numero_celular = :nuevo_numero_celular, correo_electronico = :nuevo_correo_electronico, numero_documento = :nuevo_numero_documento, id_tipo_documento = :nuevo_id_tipo_documento, id_proyecto = :nuevo_id_proyecto, id_rol = :nuevo_id_rol WHERE id_usuario = :id_usuario"
-    execute_query(query, {"nuevo_nombre_completo": nuevo_nombre_completo, "nuevo_numero_celular": nuevo_numero_celular, "nuevo_correo_electronico": nuevo_correo_electronico, "nuevo_numero_documento": nuevo_numero_documento, "nuevo_id_tipo_documento": nuevo_id_tipo_documento, "nuevo_id_proyecto": nuevo_id_proyecto, "nuevo_id_rol": nuevo_id_rol, "id_usuario": id_usuario})
+def update_usuario(id_usuario, nuevo_nombre_completo, nuevo_numero_celular, nuevo_correo_electronico, nuevo_numero_documento, nuevo_id_tipo_documento, nuevo_id_rol):
+    query= "UPDATE info_usuario SET nombre_completo = :nuevo_nombre_completo, numero_celular = :nuevo_numero_celular, correo_electronico = :nuevo_correo_electronico, numero_documento = :nuevo_numero_documento, id_tipo_documento = :nuevo_id_tipo_documento, id_rol = :nuevo_id_rol WHERE id_usuario = :id_usuario"
+    execute_query(query, {"nuevo_nombre_completo": nuevo_nombre_completo, "nuevo_numero_celular": nuevo_numero_celular, "nuevo_correo_electronico": nuevo_correo_electronico, "nuevo_numero_documento": nuevo_numero_documento, "nuevo_id_tipo_documento": nuevo_id_tipo_documento, "nuevo_id_rol": nuevo_id_rol, "id_usuario": id_usuario})
 
 def delete_usuario(id_usuario):
     query = "UPDATE info_usuario SET activo = 'N' WHERE id_usuario = :id_usuario"
