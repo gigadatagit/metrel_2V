@@ -1,6 +1,7 @@
 import streamlit as st
 import login as login
 import re
+import time
 from bd import query_to_df, create_usuario
 
 archivo = __file__.split("/")[-1]
@@ -58,6 +59,8 @@ if 'correo_electronico' in st.session_state:
             create_usuario(nombre_completo, numero_celular, correo_electronico, numero_documento, int(id_tipo_documento), int(id_rol))
             st.success("Usuario registrado exitosamente.")
             st.balloons()
+            
+            time.sleep(3)
             st.rerun()
         else:
             st.error("Por favor, completa todos los campos.")

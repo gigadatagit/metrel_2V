@@ -1,6 +1,7 @@
 import streamlit as st
 import login as login
 import re
+import time
 from bd import query_to_df, update_usuario
 
 archivo = __file__.split("/")[-1]
@@ -131,6 +132,8 @@ if 'correo_electronico' in st.session_state:
             )
             st.success("Usuario actualizado correctamente.")
             st.balloons()
+            
+            time.sleep(3)
             st.rerun()
         else:
             st.error("Por favor, completa todos los campos.")

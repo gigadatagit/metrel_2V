@@ -1,5 +1,6 @@
 import streamlit as st
 import login as login
+import time
 from bd import query_to_df, delete_usuario
 
 archivo = __file__.split("/")[-1]
@@ -23,4 +24,6 @@ if 'correo_electronico' in st.session_state:
         delete_usuario(int(id_usuario_seleccionado))
         st.success(f"El usuario '{usuario_seleccionado}' ha sido eliminado correctamente.")
         st.balloons()
+        
+        time.sleep(3)
         st.rerun()
