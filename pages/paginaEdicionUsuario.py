@@ -16,8 +16,6 @@ if 'correo_electronico' in st.session_state:
         FROM info_usuario infusr 
         INNER JOIN tipos_documento tdc ON 
             tdc.id_tipo_documento = infusr.id_tipo_documento
-        INNER JOIN info_proyecto infpry ON
-            infpry.id_proyecto = infusr.id_proyecto
         INNER JOIN info_roles infrol ON
             infrol.id_rol = infusr.id_rol
         WHERE infusr.activo = 'S';
