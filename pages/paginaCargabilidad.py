@@ -191,7 +191,7 @@ if 'correo_electronico' in st.session_state:
                     #print("******"*50)
 
                     # Lista de columnas de Energía - Inductiva a convertir
-                    columnas_Energia_Inductiva_Unidades = obtener_Columnas_DataFrame(dataFrame=df, nombres_Fijos_Columnas=['EQtotind+(Med)', 'EQtotind-(Med)', 'EQfund1ind+(Med)', 'EQfund2ind+(Med)', 'EQfund3ind+(Med)', 'EQfund1ind-(Med)', 'EQfund2ind-(Med)', 'EQfund3ind-(Med)'], valores_Corchetes=['kvarh', 'varh'])
+                    columnas_Energia_Inductiva_Unidades = obtener_Columnas_DataFrame(dataFrame=df, nombres_Fijos_Columnas=['EQtotind+(Med)', 'EQtotind-(Med)', 'EQfund1ind+(Med)', 'EQfund2ind+(Med)', 'EQfund3ind+(Med)', 'EQfund1ind-(Med)', 'EQfund2ind-(Med)', 'EQfund3ind-(Med)'], valores_Corchetes=['kVARh', 'varh'])
 
                     # Llamada a la función
                     df_Cambios_Energia_Inductiva = convertir_Unidades(dataFrame=df_Cambios_Energia_Activa, columnas_DataFrame=columnas_Energia_Inductiva_Unidades, unidad_Elegida=unidadMedidaEnergiaInductiva, unidades_Validas=['VARh', 'kVARh'])
@@ -201,7 +201,7 @@ if 'correo_electronico' in st.session_state:
                     #print("******"*50)
 
                     # Lista de columnas de Energía - Capacitiva a convertir
-                    columnas_Energia_Capacitiva_Unidades = obtener_Columnas_DataFrame(dataFrame=df, nombres_Fijos_Columnas=['EQtotcap+(Med)', 'EQtotcap-(Med)', 'EQfund1cap+(Med)', 'EQfund2cap+(Med)', 'EQfund3cap+(Med)', 'EQfund1cap-(Med)', 'EQfund2cap-(Med)', 'EQfund3cap-(Med)'], valores_Corchetes=['kvarh', 'varh'])
+                    columnas_Energia_Capacitiva_Unidades = obtener_Columnas_DataFrame(dataFrame=df, nombres_Fijos_Columnas=['EQtotcap+(Med)', 'EQtotcap-(Med)', 'EQfund1cap+(Med)', 'EQfund2cap+(Med)', 'EQfund3cap+(Med)', 'EQfund1cap-(Med)', 'EQfund2cap-(Med)', 'EQfund3cap-(Med)'], valores_Corchetes=['kVARh', 'varh'])
 
                     # Llamada a la función
                     df_Cambios_Energia_Capacitiva = convertir_Unidades(dataFrame=df_Cambios_Energia_Inductiva, columnas_DataFrame=columnas_Energia_Capacitiva_Unidades, unidad_Elegida=unidadMedidaEnergiaCapacitiva, unidades_Validas=['VARh', 'kVARh'])
