@@ -22,22 +22,72 @@ if 'correo_electronico' in st.session_state:
     if uploaded_file:
         try:
             
-            #temp_db_path = "energyiea.db"
-    
-            # Guardamos el archivo subido en disco
-            #with open(temp_db_path, "wb") as f:
-                #f.write(uploaded_file.getbuffer())
-            
             st.success("Archivo subido correctamente.")
             
-            # Conexión a la base de datos SQLite
-            #conn_sqlite = sqlite3.connect(temp_db_path)  # Reemplaza con el nombre de tu archivo SQLite
-
-            # Leer la vista 'energy_view' en un DataFrame de pandas
             df = pd.read_parquet(uploaded_file)
+            
+            # Defino los listados de columnas “disparadoras”
+            listado1 = {
+                'EQfund1cap+(Med) [varh]', 'EQfund2cap+(Med) [varh]', 'EQfund3cap+(Med) [varh]',
+                'EQfund1cap-(Med) [varh]', 'EQfund2cap-(Med) [varh]', 'EQfund3cap-(Med) [varh]',
+                'EQfund1ind+(Med) [varh]', 'EQfund2ind+(Med) [varh]', 'EQfund3ind+(Med) [varh]',
+                'EQfund1ind-(Med) [varh]', 'EQfund2ind-(Med) [varh]', 'EQfund3ind-(Med) [varh]'
+            }
+
+            listado2 = {
+                "Plt12(Min)", "Plt12(Med)", "Plt12(Max)",
+                "Plt23(Min)", "Plt23(Med)", "Plt23(Max)",
+                "Plt31(Min)", "Plt31(Med)", "Plt31(Max)"
+            }
+
+            # Defino las columnas a conservar según cada listado
+            columnas_a_dejar_listado1 = [
+                'Hora [UTC]', 'U12(Min) [V]', 'U12(Max) [V]', 'U12(Med) [V]', 'U23(Min) [V]', 'U23(Max) [V]', 'U23(Med) [V]', 'U31(Min) [V]', 'U31(Max) [V]', 'U31(Med) [V]', 'I1(Min) [A]', 'I1(Max) [A]', 'I1(Med) [A]', 'I2(Min) [A]', 'I2(Max) [A]', 'I2(Med) [A]', 'I3(Min) [A]', 'I3(Max) [A]', 'I3(Med) [A]', 'IN(Min) [A]', 'IN(Max) [A]', 'IN(Med) [A]', 'Plt1(Min) []', 'Plt1(Max) []', 'Plt1(Med) []', 'Plt2(Min) []', 'Plt2(Max) []', 'Plt2(Med) []', 'Plt3(Min) []', 'Plt3(Max) []', 'Plt3(Med) []', 'THD U12(Max) [%]', 'THD U23(Max) [%]', 'THD U31(Max) [%]', 'THD I1(Max) [%]', 'THD I2(Max) [%]', 'THD I3(Max) [%]', 'Ki1(Min) []', 'Ki1(Max) []', 'Ki1(Med) []', 'Ki2(Min) []', 'Ki2(Max) []', 'Ki2(Med) []', 'Ki3(Min) []', 'Ki3(Max) []', 'Ki3(Med) []', 'Ptot+(Min) [W]', 'Ptot+(Max) [W]', 'Ptot+(Med) [W]', 'Ntotind+(Min) [var]', 'Ntotind+(Max) [var]', 'Ntotind+(Med) [var]', 'Ntotcap-(Min) [var]', 'Ntotcap-(Max) [var]', 'Ntotcap-(Med) [var]', 'Setot+(Min) [VA]', 'Setot+(Max) [VA]', 'Setot+(Med) [VA]', 'PFetotind+(Min) []', 'PFetotind+(Max) []', 'PFetotind+(Med) []', 'PFetotind-(Min) []', 'PFetotind-(Max) []', 'PFetotind-(Med) []', 'PFetotcap+(Min) []', 'PFetotcap+(Max) []', 'PFetotcap+(Med) []', 'PFetotcap-(Min) []', 'PFetotcap-(Max) []', 'PFetotcap-(Med) []', 'Ep1-(Med) [Wh]', 'Ep2-(Med) [Wh]', 'Ep3-(Med) [Wh]', 'Ep1+(Med) [Wh]', 'Ep2+(Med) [Wh]', 'Ep3+(Med) [Wh]', 'U12 a3(Max) [%]', 'U12 a5(Max) [%]', 'U12 a7(Max) [%]', 'U12 a9(Max) [%]', 'U12 a11(Max) [%]', 'U12 a13(Max) [%]', 'U12 a15(Max) [%]', 'U23 a3(Max) [%]', 'U23 a5(Max) [%]', 'U23 a7(Max) [%]', 'U23 a9(Max) [%]', 'U23 a11(Max) [%]', 'U23 a13(Max) [%]', 'U23 a15(Max) [%]', 'U31 a3(Max) [%]', 'U31 a5(Max) [%]', 'U31 a7(Max) [%]', 'U31 a9(Max) [%]', 'U31 a11(Max) [%]', 'U31 a13(Max) [%]', 'U31 a15(Max) [%]', 'I1 a3(Max) [%]', 'I1 a5(Max) [%]', 'I1 a7(Max) [%]', 'I1 a9(Max) [%]', 'I1 a11(Max) [%]', 'I1 a13(Max) [%]', 'I1 a15(Max) [%]', 'I2 a3(Max) [%]', 'I2 a5(Max) [%]', 'I2 a7(Max) [%]', 'I2 a9(Max) [%]', 'I2 a11(Max) [%]', 'I2 a13(Max) [%]', 'I2 a15(Max) [%]', 'I3 a3(Max) [%]', 'I3 a5(Max) [%]', 'I3 a7(Max) [%]', 'I3 a9(Max) [%]', 'I3 a11(Max) [%]', 'I3 a13(Max) [%]', 'I3 a15(Max) [%]', 'TDD I1(ProAct) [%]', 'TDD I2(ProAct) [%]', 'TDD I3(ProAct) [%]', 'EQfund1cap+(Med) [varh]', 'EQfund2cap+(Med) [varh]', 'EQfund3cap+(Med) [varh]', 'EQfund1cap-(Med) [varh]', 'EQfund2cap-(Med) [varh]', 'EQfund3cap-(Med) [varh]', 'EQfund1ind+(Med) [varh]', 'EQfund2ind+(Med) [varh]', 'EQfund3ind+(Med) [varh]', 'EQfund1ind-(Med) [varh]', 'EQfund2ind-(Med) [varh]', 'EQfund3ind-(Med) [varh]'
+            ]
+            columnas_a_dejar_listado2 = [
+                'Hora [UTC]', 'U12(Min) [V]', 'U12(Max) [V]', 'U12(Med) [V]', 'U23(Min) [V]', 'U23(Max) [V]', 'U23(Med) [V]', 'U31(Min) [V]', 'U31(Max) [V]', 'U31(Med) [V]', 'I1(Min) [A]', 'I1(Max) [A]', 'I1(Med) [A]', 'I2(Min) [A]', 'I2(Max) [A]', 'I2(Med) [A]', 'I3(Min) [A]', 'I3(Max) [A]', 'I3(Med) [A]', 'Plt12(Min) []', 'Plt12(Max) []', 'Plt12(Med) []', 'Plt23(Min) []', 'Plt23(Max) []', 'Plt23(Med) []', 'Plt31(Min) []', 'Plt31(Max) []', 'Plt31(Med) []', 'THD U12(Max) [%]', 'THD U23(Max) [%]', 'THD U31(Max) [%]', 'THD I1(Max) [%]', 'THD I2(Max) [%]', 'THD I3(Max) [%]', 'Ki1(Min) []', 'Ki1(Max) []', 'Ki1(Med) []', 'Ki2(Min) []', 'Ki2(Max) []', 'Ki2(Med) []', 'Ki3(Min) []', 'Ki3(Max) []', 'Ki3(Med) []', 'Ptot+(Min) [W]', 'Ptot+(Max) [W]', 'Ptot+(Med) [W]', 'Ntotind+(Min) [var]', 'Ntotind+(Max) [var]', 'Ntotind+(Med) [var]', 'Ntotcap-(Min) [var]', 'Ntotcap-(Max) [var]', 'Ntotcap-(Med) [var]', 'Setot+(Min) [VA]', 'Setot+(Max) [VA]', 'Setot+(Med) [VA]', 'PFetotind+(Min) []', 'PFetotind+(Max) []', 'PFetotind+(Med) []', 'PFetotind-(Min) []', 'PFetotind-(Max) []', 'PFetotind-(Med) []', 'PFetotcap+(Min) []', 'PFetotcap+(Max) []', 'PFetotcap+(Med) []', 'PFetotcap-(Min) []', 'PFetotcap-(Max) []', 'PFetotcap-(Med) []', 'Eptot+(Med) [Wh]', 'Eptot-(Med) [Wh]', 'U12 a3(Max) [%]', 'U12 a5(Max) [%]', 'U12 a7(Max) [%]', 'U12 a9(Max) [%]', 'U12 a11(Max) [%]', 'U12 a13(Max) [%]', 'U12 a15(Max) [%]', 'U23 a3(Max) [%]', 'U23 a5(Max) [%]', 'U23 a7(Max) [%]', 'U23 a9(Max) [%]', 'U23 a11(Max) [%]', 'U23 a13(Max) [%]', 'U23 a15(Max) [%]', 'U31 a3(Max) [%]', 'U31 a5(Max) [%]', 'U31 a7(Max) [%]', 'U31 a9(Max) [%]', 'U31 a11(Max) [%]', 'U31 a13(Max) [%]', 'U31 a15(Max) [%]', 'I1 a3(Max) [%]', 'I1 a5(Max) [%]', 'I1 a7(Max) [%]', 'I1 a9(Max) [%]', 'I1 a11(Max) [%]', 'I1 a13(Max) [%]', 'I1 a15(Max) [%]', 'I2 a3(Max) [%]', 'I2 a5(Max) [%]', 'I2 a7(Max) [%]', 'I2 a9(Max) [%]', 'I2 a11(Max) [%]', 'I2 a13(Max) [%]', 'I2 a15(Max) [%]', 'I3 a3(Max) [%]', 'I3 a5(Max) [%]', 'I3 a7(Max) [%]', 'I3 a9(Max) [%]', 'I3 a11(Max) [%]', 'I3 a13(Max) [%]', 'I3 a15(Max) [%]', 'TDD I1(ProAct) [%]', 'TDD I2(ProAct) [%]', 'TDD I3(ProAct) [%]', 'Eqtotcap+(Med) [varh]', 'Eqtotcap-(Med) [varh]', 'Eqtotind+(Med) [varh]', 'Eqtotind-(Med) [varh]'
+            ]
+
+            # Asocio cada conjunto a su lista de columnas a dejar
+            reglas = [
+                (listado1, columnas_a_dejar_listado1),
+                (listado2, columnas_a_dejar_listado2),
+            ]
+
+            # Recorro las reglas y aplico la primera que coincida
+            for disparadores, cols_dejar in reglas:
+                # intersección entre las columnas del DF y el conjunto de disparadores
+                if df.columns.to_series().isin(disparadores).any():
+                    # filtro sólo las columnas que existan en el DF
+                    columnas_finales = [c for c in cols_dejar if c in df.columns]
+                    df = df[columnas_finales]
+                    break  # salgo del bucle una vez aplicada la regla
+                
+                else:
+                    
+                    # Ninguna regla coincidió
+                    print("No se encontraron columnas de ninguno de los listados.")
+            
+            # Define your lists of column names to check
+            # listado1 = ['EQfund1cap+(Med) [varh]', 'EQfund2cap+(Med) [varh]', 'EQfund3cap+(Med) [varh]', 'EQfund1cap-(Med) [varh]', 'EQfund2cap-(Med) [varh]', 'EQfund3cap-(Med) [varh]', 'EQfund1ind+(Med) [varh]', 'EQfund2ind+(Med) [varh]', 'EQfund3ind+(Med) [varh]', 'EQfund1ind-(Med) [varh]', 'EQfund2ind-(Med) [varh]', 'EQfund3ind-(Med) [varh]']
+            # listado2 = ["Plt12(Min)", "Plt12(Med)", "Plt12(Max)", "Plt23(Min)", "Plt23(Med)", "Plt23(Max)", "Plt31(Min)", "Plt31(Med)", "Plt31(Max)"]
+
+            # Define which columns to keep for each list
+            # columnas_a_dejar_listado1 = ['Hora [UTC]', 'U12(Min) [V]', 'U12(Max) [V]', 'U12(Med) [V]', 'U23(Min) [V]', 'U23(Max) [V]', 'U23(Med) [V]', 'U31(Min) [V]', 'U31(Max) [V]', 'U31(Med) [V]', 'I1(Min) [A]', 'I1(Max) [A]', 'I1(Med) [A]', 'I2(Min) [A]', 'I2(Max) [A]', 'I2(Med) [A]', 'I3(Min) [A]', 'I3(Max) [A]', 'I3(Med) [A]', 'IN(Min) [A]', 'IN(Max) [A]', 'IN(Med) [A]', 'Plt1(Min) []', 'Plt1(Max) []', 'Plt1(Med) []', 'Plt2(Min) []', 'Plt2(Max) []', 'Plt2(Med) []', 'Plt3(Min) []', 'Plt3(Max) []', 'Plt3(Med) []', 'THD U12(Max) [%]', 'THD U23(Max) [%]', 'THD U31(Max) [%]', 'THD I1(Max) [%]', 'THD I2(Max) [%]', 'THD I3(Max) [%]', 'Ki1(Min) []', 'Ki1(Max) []', 'Ki1(Med) []', 'Ki2(Min) []', 'Ki2(Max) []', 'Ki2(Med) []', 'Ki3(Min) []', 'Ki3(Max) []', 'Ki3(Med) []', 'Ptot+(Min) [W]', 'Ptot+(Max) [W]', 'Ptot+(Med) [W]', 'Ntotind+(Min) [var]', 'Ntotind+(Max) [var]', 'Ntotind+(Med) [var]', 'Ntotcap-(Min) [var]', 'Ntotcap-(Max) [var]', 'Ntotcap-(Med) [var]', 'Setot+(Min) [VA]', 'Setot+(Max) [VA]', 'Setot+(Med) [VA]', 'PFetotind+(Min) []', 'PFetotind+(Max) []', 'PFetotind+(Med) []', 'PFetotind-(Min) []', 'PFetotind-(Max) []', 'PFetotind-(Med) []', 'PFetotcap+(Min) []', 'PFetotcap+(Max) []', 'PFetotcap+(Med) []', 'PFetotcap-(Min) []', 'PFetotcap-(Max) []', 'PFetotcap-(Med) []', 'Ep1-(Med) [Wh]', 'Ep2-(Med) [Wh]', 'Ep3-(Med) [Wh]', 'Ep1+(Med) [Wh]', 'Ep2+(Med) [Wh]', 'Ep3+(Med) [Wh]', 'U12 a3(Max) [%]', 'U12 a5(Max) [%]', 'U12 a7(Max) [%]', 'U12 a9(Max) [%]', 'U12 a11(Max) [%]', 'U12 a13(Max) [%]', 'U12 a15(Max) [%]', 'U23 a3(Max) [%]', 'U23 a5(Max) [%]', 'U23 a7(Max) [%]', 'U23 a9(Max) [%]', 'U23 a11(Max) [%]', 'U23 a13(Max) [%]', 'U23 a15(Max) [%]', 'U31 a3(Max) [%]', 'U31 a5(Max) [%]', 'U31 a7(Max) [%]', 'U31 a9(Max) [%]', 'U31 a11(Max) [%]', 'U31 a13(Max) [%]', 'U31 a15(Max) [%]', 'I1 a3(Max) [%]', 'I1 a5(Max) [%]', 'I1 a7(Max) [%]', 'I1 a9(Max) [%]', 'I1 a11(Max) [%]', 'I1 a13(Max) [%]', 'I1 a15(Max) [%]', 'I2 a3(Max) [%]', 'I2 a5(Max) [%]', 'I2 a7(Max) [%]', 'I2 a9(Max) [%]', 'I2 a11(Max) [%]', 'I2 a13(Max) [%]', 'I2 a15(Max) [%]', 'I3 a3(Max) [%]', 'I3 a5(Max) [%]', 'I3 a7(Max) [%]', 'I3 a9(Max) [%]', 'I3 a11(Max) [%]', 'I3 a13(Max) [%]', 'I3 a15(Max) [%]', 'TDD I1(ProAct) [%]', 'TDD I2(ProAct) [%]', 'TDD I3(ProAct) [%]', 'EQfund1cap+(Med) [varh]', 'EQfund2cap+(Med) [varh]', 'EQfund3cap+(Med) [varh]', 'EQfund1cap-(Med) [varh]', 'EQfund2cap-(Med) [varh]', 'EQfund3cap-(Med) [varh]', 'EQfund1ind+(Med) [varh]', 'EQfund2ind+(Med) [varh]', 'EQfund3ind+(Med) [varh]', 'EQfund1ind-(Med) [varh]', 'EQfund2ind-(Med) [varh]', 'EQfund3ind-(Med) [varh]']
+            # columnas_a_dejar_listado2 = ['Hora [UTC]', 'U12(Min) [V]', 'U12(Max) [V]', 'U12(Med) [V]', 'U23(Min) [V]', 'U23(Max) [V]', 'U23(Med) [V]', 'U31(Min) [V]', 'U31(Max) [V]', 'U31(Med) [V]', 'I1(Min) [A]', 'I1(Max) [A]', 'I1(Med) [A]', 'I2(Min) [A]', 'I2(Max) [A]', 'I2(Med) [A]', 'I3(Min) [A]', 'I3(Max) [A]', 'I3(Med) [A]', 'Plt12(Min) []', 'Plt12(Max) []', 'Plt12(Med) []', 'Plt23(Min) []', 'Plt23(Max) []', 'Plt23(Med) []', 'Plt31(Min) []', 'Plt31(Max) []', 'Plt31(Med) []', 'THD U12(Max) [%]', 'THD U23(Max) [%]', 'THD U31(Max) [%]', 'THD I1(Max) [%]', 'THD I2(Max) [%]', 'THD I3(Max) [%]', 'Ki1(Min) []', 'Ki1(Max) []', 'Ki1(Med) []', 'Ki2(Min) []', 'Ki2(Max) []', 'Ki2(Med) []', 'Ki3(Min) []', 'Ki3(Max) []', 'Ki3(Med) []', 'Ptot+(Min) [W]', 'Ptot+(Max) [W]', 'Ptot+(Med) [W]', 'Ntotind+(Min) [var]', 'Ntotind+(Max) [var]', 'Ntotind+(Med) [var]', 'Ntotcap-(Min) [var]', 'Ntotcap-(Max) [var]', 'Ntotcap-(Med) [var]', 'Setot+(Min) [VA]', 'Setot+(Max) [VA]', 'Setot+(Med) [VA]', 'PFetotind+(Min) []', 'PFetotind+(Max) []', 'PFetotind+(Med) []', 'PFetotind-(Min) []', 'PFetotind-(Max) []', 'PFetotind-(Med) []', 'PFetotcap+(Min) []', 'PFetotcap+(Max) []', 'PFetotcap+(Med) []', 'PFetotcap-(Min) []', 'PFetotcap-(Max) []', 'PFetotcap-(Med) []', 'Eptot+(Med) [Wh]', 'Eptot-(Med) [Wh]', 'U12 a3(Max) [%]', 'U12 a5(Max) [%]', 'U12 a7(Max) [%]', 'U12 a9(Max) [%]', 'U12 a11(Max) [%]', 'U12 a13(Max) [%]', 'U12 a15(Max) [%]', 'U23 a3(Max) [%]', 'U23 a5(Max) [%]', 'U23 a7(Max) [%]', 'U23 a9(Max) [%]', 'U23 a11(Max) [%]', 'U23 a13(Max) [%]', 'U23 a15(Max) [%]', 'U31 a3(Max) [%]', 'U31 a5(Max) [%]', 'U31 a7(Max) [%]', 'U31 a9(Max) [%]', 'U31 a11(Max) [%]', 'U31 a13(Max) [%]', 'U31 a15(Max) [%]', 'I1 a3(Max) [%]', 'I1 a5(Max) [%]', 'I1 a7(Max) [%]', 'I1 a9(Max) [%]', 'I1 a11(Max) [%]', 'I1 a13(Max) [%]', 'I1 a15(Max) [%]', 'I2 a3(Max) [%]', 'I2 a5(Max) [%]', 'I2 a7(Max) [%]', 'I2 a9(Max) [%]', 'I2 a11(Max) [%]', 'I2 a13(Max) [%]', 'I2 a15(Max) [%]', 'I3 a3(Max) [%]', 'I3 a5(Max) [%]', 'I3 a7(Max) [%]', 'I3 a9(Max) [%]', 'I3 a11(Max) [%]', 'I3 a13(Max) [%]', 'I3 a15(Max) [%]', 'TDD I1(ProAct) [%]', 'TDD I2(ProAct) [%]', 'TDD I3(ProAct) [%]', 'Eqtotcap+(Med) [varh]', 'Eqtotcap-(Med) [varh]', 'Eqtotind+(Med) [varh]', 'Eqtotind-(Med) [varh]']
+
+            # Check if any column in df matches listado1
+            # if any(col in df.columns for col in listado1):
+                # columnas_a_dejar = [col for col in columnas_a_dejar_listado1 if col in df.columns]
+                # df = df[columnas_a_dejar]
+
+            # Check if any column in df matches listado2
+            # elif any(col in df.columns for col in listado2):
+                # columnas_a_dejar = [col for col in columnas_a_dejar_listado2 if col in df.columns]
+                # df = df[columnas_a_dejar]
 
             st.markdown("""
-            ---
+            --- t_empleados_contratos. (al lado f. ingreso)
             
             > ## Elige la plantilla para generar el informe.
             
@@ -274,13 +324,17 @@ if 'correo_electronico' in st.session_state:
 
                         visualizacion_Generada = True
                         
-                        var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/b7b8b3cb4c88de73ed5db3e843935526b4c17ec3/vars_Template_ETV_Metrel_VATIA_Generada.docx?raw=true"
+                        #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/b7b8b3cb4c88de73ed5db3e843935526b4c17ec3/vars_Template_ETV_Metrel_VATIA_Generada.docx?raw=true"
+
+                        var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/589d224bd577d42354dc4b23067bc5bad22b9c91/plantilla_Word_VATIA_Generada.docx?raw=true"
 
                     else:
                         
                         visualizacion_Generada = False
 
-                        var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/365a61d9e72f3e175c39d5fa6cb1c189e0c70ffa/vars_Template_ETV_Metrel_VATIA5.docx?raw=true"
+                        #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/365a61d9e72f3e175c39d5fa6cb1c189e0c70ffa/vars_Template_ETV_Metrel_VATIA5.docx?raw=true"
+
+                        var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/479f25e8ed4e14778956a202bc738378a01d3d3e/plantilla_Word_VATIA_NoGenerada.docx?raw=true"
 
                         #print(f"Has elegido no visualizar la información de la Energía Generada {e}")
                         #return  # Salir del menú
@@ -1590,6 +1644,8 @@ if 'correo_electronico' in st.session_state:
                             'PQS_POT_APA_MAX_MN': round(df_Tabla_Calculos_PQS_Potencias[listado_Registro_PQS[10]].iloc[2], 2),
                             'PQS_CARGABILIDAD_MAX': round(var_Lista_PQS_Carg_Disp[0], 2),
                             'DISPONIBILIDAD_CARGA': round(var_Lista_PQS_Carg_Disp[1], 2),
+                            'PQS_CARGABILIDAD_MAX_KVA': round(((var_Lista_PQS_Carg_Disp[0]*var2)/100), 2),
+                            'DISPONIBILIDAD_CARGA_KVA': round(((var_Lista_PQS_Carg_Disp[1]*var2)/100), 2),
                             'FP_POT_CONS_CAP_MIN_PR': round(df_Tabla_Calculos_FactorPotencia_Consumido[listado_Registro_FactorPotencia_Consumida[3]].iloc[0], 2),
                             'FP_POT_CONS_CAP_MED_PR': round(df_Tabla_Calculos_FactorPotencia_Consumido[listado_Registro_FactorPotencia_Consumida[5]].iloc[0], 2),
                             'FP_POT_CONS_CAP_MAX_PR': round(df_Tabla_Calculos_FactorPotencia_Consumido[listado_Registro_FactorPotencia_Consumida[4]].iloc[0], 2),
