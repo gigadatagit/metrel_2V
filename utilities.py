@@ -1754,16 +1754,16 @@ def crear_DataFrame_Energias(dataFrame: pd.DataFrame):
     dataFrame_H_a_H_Result['KWH'] = 100
     
     dataFrame_H_a_H_Result['KVARH_CAP'] = np.where(
-        (dataFrame_H_a_H_Result['EQtotcap+(Med) [kvarh]'] != 0) &
+        (dataFrame_H_a_H_Result['EQtotcap+(Med) [kVARh]'] != 0) &
         (dataFrame_H_a_H_Result['Eptot+(Med) [kWh]'] != 0),
-        dataFrame_H_a_H_Result['EQtotcap+(Med) [kvarh]'] / dataFrame_H_a_H_Result['Eptot+(Med) [kWh]'] * 100,
+        dataFrame_H_a_H_Result['EQtotcap+(Med) [kVARh]'] / dataFrame_H_a_H_Result['Eptot+(Med) [kWh]'] * 100,
         0
     )
 
     dataFrame_H_a_H_Result['KARH_IND'] = np.where(
-        (dataFrame_H_a_H_Result['EQtotind+(Med) [kvarh]'] != 0) &
+        (dataFrame_H_a_H_Result['EQtotind+(Med) [kVARh]'] != 0) &
         (dataFrame_H_a_H_Result['Eptot+(Med) [kWh]'] != 0),
-        (dataFrame_H_a_H_Result['EQtotind+(Med) [kvarh]'] / dataFrame_H_a_H_Result['Eptot+(Med) [kWh]']) * 100,
+        (dataFrame_H_a_H_Result['EQtotind+(Med) [kVARh]'] / dataFrame_H_a_H_Result['Eptot+(Med) [kWh]']) * 100,
         0
     )
 
