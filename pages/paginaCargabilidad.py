@@ -262,7 +262,7 @@ if 'correo_electronico' in st.session_state:
 
                     #print("******"*50)
                     
-                    listado_Columnas_Energia_Generada = obtener_Columnas_DataFrame(dataFrame=df, nombres_Fijos_Columnas=['Ep1-(Med)', 'Ep2-(Med)', 'Ep3-(Med)', 'EQfund1ind-(Med)', 'EQfund2ind-(Med)', 'EQfund3ind-(Med)', 'EQfund1cap-(Med)', 'EQfund2cap-(Med)', 'EQfund3cap-(Med)', 'PFetotcap+(Med)', 'PFetotind+(Med)', 'PFetotcap-(Med)', 'PFetotind-(Med)'], valores_Corchetes=['Wh', 'varh', ''])
+                    listado_Columnas_Energia_Generada = obtener_Columnas_DataFrame(dataFrame=df, nombres_Fijos_Columnas=['Ep1-(Med)', 'Ep2-(Med)', 'Ep3-(Med)', 'EQfund1ind-(Med)', 'EQfund2ind-(Med)', 'EQfund3ind-(Med)', 'EQfund1cap-(Med)', 'EQfund2cap-(Med)', 'EQfund3cap-(Med)', 'PFetotcap+(Med)', 'PFetotind+(Med)', 'PFetotcap-(Med)', 'PFetotind-(Med)'], valores_Corchetes=['Wh', 'kVARh', 'varh', ''])
 
                     if energiaGenerada == "Sí":
 

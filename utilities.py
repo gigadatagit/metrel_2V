@@ -1679,13 +1679,13 @@ def crear_DataFrame_Energias(dataFrame: pd.DataFrame):
         "capacitiva": {
             "columnas": ['EQfund1cap+(Med)', 'EQfund2cap+(Med)', 'EQfund3cap+(Med)'],
             "unidad": "varh",
-            "columna_total": "EQtotcap+(Med) [kvarh]",
+            "columna_total": "EQtotcap+(Med) [kVARh]",
             "computed": None
         },
         "inductiva": {
             "columnas": ['EQfund1ind+(Med)', 'EQfund2ind+(Med)', 'EQfund3ind+(Med)'],
             "unidad": "varh",
-            "columna_total": "EQtotind+(Med) [kvarh]",
+            "columna_total": "EQtotind+(Med) [kVARh]",
             "computed": None
         }
     }
