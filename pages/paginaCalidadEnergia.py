@@ -87,7 +87,7 @@ if 'correo_electronico' in st.session_state:
                 # df = df[columnas_a_dejar]
 
             st.markdown("""
-            --- t_empleados_contratos. (al lado f. ingreso)
+            ---
             
             > ## Elige la plantilla para generar el informe.
             
