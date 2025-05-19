@@ -96,10 +96,10 @@ def renombrar_columnas(dataFrame: pd.DataFrame):
         "Plt31(Max)": "Plt3(Max)",
         "Eptot+(Med) [Wh]": "Eptot+(Med) [kWh]",
         "Eptot-(Med) [Wh]": "Eptot-(Med) [kWh]",
-        "Eqtotind+(Med) [varh]": "EQtotind+(Med) [kvarh]",
-        "Eqtotind-(Med) [varh]": "EQtotind-(Med) [kvarh]",
-        "Eqtotcap+(Med) [varh]": "EQtotcap+(Med) [kvarh]",
-        "Eqtotcap-(Med) [varh]": "EQtotcap-(Med) [kvarh]"
+        "Eqtotind+(Med) [varh]": "EQtotind+(Med) [kVARh]",
+        "Eqtotind-(Med) [varh]": "EQtotind-(Med) [kVARh]",
+        "Eqtotcap+(Med) [varh]": "EQtotcap+(Med) [kVARh]",
+        "Eqtotcap-(Med) [varh]": "EQtotcap-(Med) [kVARh]"
     }
 
     # Verificar si las columnas ya tienen los nombres correctos.
