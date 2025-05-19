@@ -26,7 +26,7 @@ if 'correo_electronico' in st.session_state:
             
             df = pd.read_parquet(uploaded_file)
             
-            # Defino los listados de columnas “disparadoras”
+            # Defino los listados “disparadores”
             listado1 = {
                 'EQfund1cap+(Med) [varh]', 'EQfund2cap+(Med) [varh]', 'EQfund3cap+(Med) [varh]',
                 'EQfund1cap-(Med) [varh]', 'EQfund2cap-(Med) [varh]', 'EQfund3cap-(Med) [varh]',
@@ -35,38 +35,35 @@ if 'correo_electronico' in st.session_state:
             }
 
             listado2 = {
-                "Plt12(Min)", "Plt12(Med)", "Plt12(Max)",
-                "Plt23(Min)", "Plt23(Med)", "Plt23(Max)",
-                "Plt31(Min)", "Plt31(Med)", "Plt31(Max)"
+                'Plt12(Min) []', 'Plt12(Med) []', 'Plt12(Max) []',
+                'Plt23(Min) []', 'Plt23(Med) []', 'Plt23(Max) []',
+                'Plt31(Min) []', 'Plt31(Med) []', 'Plt31(Max) []'
             }
 
-            # Defino las columnas a conservar según cada listado
+            # 3. Defino las columnas que quiero “traer” en cada caso
             columnas_a_dejar_listado1 = [
                 'Hora [UTC]', 'U12(Min) [V]', 'U12(Max) [V]', 'U12(Med) [V]', 'U23(Min) [V]', 'U23(Max) [V]', 'U23(Med) [V]', 'U31(Min) [V]', 'U31(Max) [V]', 'U31(Med) [V]', 'I1(Min) [A]', 'I1(Max) [A]', 'I1(Med) [A]', 'I2(Min) [A]', 'I2(Max) [A]', 'I2(Med) [A]', 'I3(Min) [A]', 'I3(Max) [A]', 'I3(Med) [A]', 'IN(Min) [A]', 'IN(Max) [A]', 'IN(Med) [A]', 'Plt1(Min) []', 'Plt1(Max) []', 'Plt1(Med) []', 'Plt2(Min) []', 'Plt2(Max) []', 'Plt2(Med) []', 'Plt3(Min) []', 'Plt3(Max) []', 'Plt3(Med) []', 'THD U12(Max) [%]', 'THD U23(Max) [%]', 'THD U31(Max) [%]', 'THD I1(Max) [%]', 'THD I2(Max) [%]', 'THD I3(Max) [%]', 'Ki1(Min) []', 'Ki1(Max) []', 'Ki1(Med) []', 'Ki2(Min) []', 'Ki2(Max) []', 'Ki2(Med) []', 'Ki3(Min) []', 'Ki3(Max) []', 'Ki3(Med) []', 'Ptot+(Min) [W]', 'Ptot+(Max) [W]', 'Ptot+(Med) [W]', 'Ntotind+(Min) [var]', 'Ntotind+(Max) [var]', 'Ntotind+(Med) [var]', 'Ntotcap-(Min) [var]', 'Ntotcap-(Max) [var]', 'Ntotcap-(Med) [var]', 'Setot+(Min) [VA]', 'Setot+(Max) [VA]', 'Setot+(Med) [VA]', 'PFetotind+(Min) []', 'PFetotind+(Max) []', 'PFetotind+(Med) []', 'PFetotind-(Min) []', 'PFetotind-(Max) []', 'PFetotind-(Med) []', 'PFetotcap+(Min) []', 'PFetotcap+(Max) []', 'PFetotcap+(Med) []', 'PFetotcap-(Min) []', 'PFetotcap-(Max) []', 'PFetotcap-(Med) []', 'Ep1-(Med) [Wh]', 'Ep2-(Med) [Wh]', 'Ep3-(Med) [Wh]', 'Ep1+(Med) [Wh]', 'Ep2+(Med) [Wh]', 'Ep3+(Med) [Wh]', 'U12 a3(Max) [%]', 'U12 a5(Max) [%]', 'U12 a7(Max) [%]', 'U12 a9(Max) [%]', 'U12 a11(Max) [%]', 'U12 a13(Max) [%]', 'U12 a15(Max) [%]', 'U23 a3(Max) [%]', 'U23 a5(Max) [%]', 'U23 a7(Max) [%]', 'U23 a9(Max) [%]', 'U23 a11(Max) [%]', 'U23 a13(Max) [%]', 'U23 a15(Max) [%]', 'U31 a3(Max) [%]', 'U31 a5(Max) [%]', 'U31 a7(Max) [%]', 'U31 a9(Max) [%]', 'U31 a11(Max) [%]', 'U31 a13(Max) [%]', 'U31 a15(Max) [%]', 'I1 a3(Max) [%]', 'I1 a5(Max) [%]', 'I1 a7(Max) [%]', 'I1 a9(Max) [%]', 'I1 a11(Max) [%]', 'I1 a13(Max) [%]', 'I1 a15(Max) [%]', 'I2 a3(Max) [%]', 'I2 a5(Max) [%]', 'I2 a7(Max) [%]', 'I2 a9(Max) [%]', 'I2 a11(Max) [%]', 'I2 a13(Max) [%]', 'I2 a15(Max) [%]', 'I3 a3(Max) [%]', 'I3 a5(Max) [%]', 'I3 a7(Max) [%]', 'I3 a9(Max) [%]', 'I3 a11(Max) [%]', 'I3 a13(Max) [%]', 'I3 a15(Max) [%]', 'TDD I1(ProAct) [%]', 'TDD I2(ProAct) [%]', 'TDD I3(ProAct) [%]', 'EQfund1cap+(Med) [varh]', 'EQfund2cap+(Med) [varh]', 'EQfund3cap+(Med) [varh]', 'EQfund1cap-(Med) [varh]', 'EQfund2cap-(Med) [varh]', 'EQfund3cap-(Med) [varh]', 'EQfund1ind+(Med) [varh]', 'EQfund2ind+(Med) [varh]', 'EQfund3ind+(Med) [varh]', 'EQfund1ind-(Med) [varh]', 'EQfund2ind-(Med) [varh]', 'EQfund3ind-(Med) [varh]'
             ]
+
             columnas_a_dejar_listado2 = [
                 'Hora [UTC]', 'U12(Min) [V]', 'U12(Max) [V]', 'U12(Med) [V]', 'U23(Min) [V]', 'U23(Max) [V]', 'U23(Med) [V]', 'U31(Min) [V]', 'U31(Max) [V]', 'U31(Med) [V]', 'I1(Min) [A]', 'I1(Max) [A]', 'I1(Med) [A]', 'I2(Min) [A]', 'I2(Max) [A]', 'I2(Med) [A]', 'I3(Min) [A]', 'I3(Max) [A]', 'I3(Med) [A]', 'Plt12(Min) []', 'Plt12(Max) []', 'Plt12(Med) []', 'Plt23(Min) []', 'Plt23(Max) []', 'Plt23(Med) []', 'Plt31(Min) []', 'Plt31(Max) []', 'Plt31(Med) []', 'THD U12(Max) [%]', 'THD U23(Max) [%]', 'THD U31(Max) [%]', 'THD I1(Max) [%]', 'THD I2(Max) [%]', 'THD I3(Max) [%]', 'Ki1(Min) []', 'Ki1(Max) []', 'Ki1(Med) []', 'Ki2(Min) []', 'Ki2(Max) []', 'Ki2(Med) []', 'Ki3(Min) []', 'Ki3(Max) []', 'Ki3(Med) []', 'Ptot+(Min) [W]', 'Ptot+(Max) [W]', 'Ptot+(Med) [W]', 'Ntotind+(Min) [var]', 'Ntotind+(Max) [var]', 'Ntotind+(Med) [var]', 'Ntotcap-(Min) [var]', 'Ntotcap-(Max) [var]', 'Ntotcap-(Med) [var]', 'Setot+(Min) [VA]', 'Setot+(Max) [VA]', 'Setot+(Med) [VA]', 'PFetotind+(Min) []', 'PFetotind+(Max) []', 'PFetotind+(Med) []', 'PFetotind-(Min) []', 'PFetotind-(Max) []', 'PFetotind-(Med) []', 'PFetotcap+(Min) []', 'PFetotcap+(Max) []', 'PFetotcap+(Med) []', 'PFetotcap-(Min) []', 'PFetotcap-(Max) []', 'PFetotcap-(Med) []', 'Eptot+(Med) [Wh]', 'Eptot-(Med) [Wh]', 'U12 a3(Max) [%]', 'U12 a5(Max) [%]', 'U12 a7(Max) [%]', 'U12 a9(Max) [%]', 'U12 a11(Max) [%]', 'U12 a13(Max) [%]', 'U12 a15(Max) [%]', 'U23 a3(Max) [%]', 'U23 a5(Max) [%]', 'U23 a7(Max) [%]', 'U23 a9(Max) [%]', 'U23 a11(Max) [%]', 'U23 a13(Max) [%]', 'U23 a15(Max) [%]', 'U31 a3(Max) [%]', 'U31 a5(Max) [%]', 'U31 a7(Max) [%]', 'U31 a9(Max) [%]', 'U31 a11(Max) [%]', 'U31 a13(Max) [%]', 'U31 a15(Max) [%]', 'I1 a3(Max) [%]', 'I1 a5(Max) [%]', 'I1 a7(Max) [%]', 'I1 a9(Max) [%]', 'I1 a11(Max) [%]', 'I1 a13(Max) [%]', 'I1 a15(Max) [%]', 'I2 a3(Max) [%]', 'I2 a5(Max) [%]', 'I2 a7(Max) [%]', 'I2 a9(Max) [%]', 'I2 a11(Max) [%]', 'I2 a13(Max) [%]', 'I2 a15(Max) [%]', 'I3 a3(Max) [%]', 'I3 a5(Max) [%]', 'I3 a7(Max) [%]', 'I3 a9(Max) [%]', 'I3 a11(Max) [%]', 'I3 a13(Max) [%]', 'I3 a15(Max) [%]', 'TDD I1(ProAct) [%]', 'TDD I2(ProAct) [%]', 'TDD I3(ProAct) [%]', 'Eqtotcap+(Med) [varh]', 'Eqtotcap-(Med) [varh]', 'Eqtotind+(Med) [varh]', 'Eqtotind-(Med) [varh]'
             ]
 
-            # Asocio cada conjunto a su lista de columnas a dejar
-            reglas = [
-                (listado1, columnas_a_dejar_listado1),
-                (listado2, columnas_a_dejar_listado2),
-            ]
+            # 4. Aplico la lógica de filtrado
+            if any(col in df.columns for col in listado1):
+                # Escenario 1: si aparece cualquiera de listado1
+                # Traigo **todas** las columnas que definí en columnas_a_dejar_listado1
+                df = df[columnas_a_dejar_listado1]
 
-            # Recorro las reglas y aplico la primera que coincida
-            for disparadores, cols_dejar in reglas:
-                # intersección entre las columnas del DF y el conjunto de disparadores
-                if df.columns.to_series().isin(disparadores).any():
-                    # filtro sólo las columnas que existan en el DF
-                    columnas_finales = [c for c in cols_dejar if c in df.columns]
-                    df = df[columnas_finales]
-                    break  # salgo del bucle una vez aplicada la regla
-                
-                else:
-                    
-                    # Ninguna regla coincidió
-                    print("No se encontraron columnas de ninguno de los listados.")
+            elif any(col in df.columns for col in listado2):
+                # Escenario 2: si aparece cualquiera de listado2
+                # Traigo **todas** las columnas que definí en columnas_a_dejar_listado2
+                df = df[columnas_a_dejar_listado2]
+
+            else:
+                # Ningún escenario coincide: puedes optar por dejar df intacto,
+                # tirar un warning, o devolver un df vacío:
+                print("Advertencia: no se encontró ninguna columna de listado1 ni listado2.")
             
             # Define your lists of column names to check
             # listado1 = ['EQfund1cap+(Med) [varh]', 'EQfund2cap+(Med) [varh]', 'EQfund3cap+(Med) [varh]', 'EQfund1cap-(Med) [varh]', 'EQfund2cap-(Med) [varh]', 'EQfund3cap-(Med) [varh]', 'EQfund1ind+(Med) [varh]', 'EQfund2ind+(Med) [varh]', 'EQfund3ind+(Med) [varh]', 'EQfund1ind-(Med) [varh]', 'EQfund2ind-(Med) [varh]', 'EQfund3ind-(Med) [varh]']
