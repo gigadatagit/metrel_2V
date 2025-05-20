@@ -388,7 +388,7 @@ if 'correo_electronico' in st.session_state:
 
                     df_Tabla_FactorPotencia_Grupos = filtrar_DataFrame_Columnas(dataFrame=df, nombres_Fijos_Columnas=['Hora', 'PFetotind+(Min)', 'PFetotind+(Med)', 'PFetotind+(Max)'], valores_Corchetes=['UTC', ''])
 
-                    df_Tabla_Energias = filtrar_DataFrame_Columnas(dataFrame=df, nombres_Fijos_Columnas=['Hora', 'Ep1+(Med)', 'Ep2+(Med)', 'Ep3+(Med)', 'Ep1-(Med)', 'Ep2-(Med)', 'Ep3-(Med)', 'EQfund1cap+(Med)', 'EQfund2cap+(Med)', 'EQfund3cap+(Med)', 'EQfund1cap-(Med)', 'EQfund2cap-(Med)', 'EQfund3cap-(Med)', 'EQfund1ind+(Med)', 'EQfund2ind+(Med)', 'EQfund3ind+(Med)', 'EQfund1ind-(Med)', 'EQfund2ind-(Med)', 'EQfund3ind-(Med)'], valores_Corchetes=['UTC', 'Wh', 'varh'])
+                    df_Tabla_Energias = filtrar_DataFrame_Columnas(dataFrame=df, nombres_Fijos_Columnas=['Hora', 'Ep1+(Med)', 'Ep2+(Med)', 'Ep3+(Med)', 'Ep1-(Med)', 'Ep2-(Med)', 'Ep3-(Med)', 'Eptot+(Med)', 'Eptot-(Med)', 'EQfund1cap+(Med)', 'EQfund2cap+(Med)', 'EQfund3cap+(Med)', 'EQfund1cap-(Med)', 'EQfund2cap-(Med)', 'EQfund3cap-(Med)', 'EQtotcap+(Med)', 'EQtotcap-(Med)', 'EQfund1ind+(Med)', 'EQfund2ind+(Med)', 'EQfund3ind+(Med)', 'EQfund1ind-(Med)', 'EQfund2ind-(Med)', 'EQfund3ind-(Med)', 'EQtotind+(Med)', 'EQtotind-(Med)'], valores_Corchetes=['UTC', 'Wh', 'varh', 'kVARh'])
 
                     #print("******"*50)
 
