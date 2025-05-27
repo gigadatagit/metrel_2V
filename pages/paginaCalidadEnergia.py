@@ -1241,10 +1241,10 @@ if 'correo_electronico' in st.session_state:
                     list_Columns_Grafico_FactorPot_Generado: list = obtener_Columnas_DataFrame(dataFrame=df_Tabla_FactorPotencia, nombres_Fijos_Columnas=['PFetotcap-(Med)', 'PFetotind-(Med)'], valores_Corchetes=[''])
                     print(f"Listado de Columnas Factor de Potencia (Generado): {list_Columns_Grafico_FactorPot_Generado}")
 
-                    list_Columns_Graficos_Consolidado_Energia: list = ['Eptot+(Med) [kWh]', 'EQtotind+(Med) [kvarh]', 'EQtotcap+(Med) [kvarh]', 'KARH_IND', 'KVARH_CAP']
+                    list_Columns_Graficos_Consolidado_Energia: list = ['Eptot+(Med) [kWh]', 'EQtotind+(Med) [kVARh]', 'EQtotcap+(Med) [kVARh]', 'KARH_IND', 'KVARH_CAP']
                     print(f"Listado de Columnas de Energías: {list_Columns_Graficos_Consolidado_Energia}")
 
-                    list_Columns_Graficos_Consolidado_Energia_Generada: list = ['Eptot-(Med) [kWh]', 'EQtotind-(Med) [kvarh]', 'EQtotcap-(Med) [kvarh]', 'KARH_IND', 'KVARH_CAP']
+                    list_Columns_Graficos_Consolidado_Energia_Generada: list = ['Eptot-(Med) [kWh]', 'EQtotind-(Med) [kVARh]', 'EQtotcap-(Med) [kVARh]', 'KARH_IND', 'KVARH_CAP']
                     print(f"Listado de Columnas de Energías Generadas: {list_Columns_Graficos_Consolidado_Energia_Generada}")
 
                     # Aquí tenemos una lista de las columnas que se van a graficar a través del tiempo para el Análisis de Distorsión de Tensión
