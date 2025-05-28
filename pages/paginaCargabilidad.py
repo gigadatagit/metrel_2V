@@ -315,7 +315,7 @@ if 'correo_electronico' in st.session_state:
                         
                         #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/b7b8b3cb4c88de73ed5db3e843935526b4c17ec3/vars_Template_ETV_Metrel_VATIA_Generada.docx?raw=true"
 
-                        var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/589d224bd577d42354dc4b23067bc5bad22b9c91/plantilla_Word_VATIA_Generada.docx?raw=true"
+                        var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/1b9b007bb3b463e30b86f95f34e60b33998ee122/plantilla_Word_VATIA_Generada.docx?raw=true"
 
                     else:
                         
@@ -323,7 +323,7 @@ if 'correo_electronico' in st.session_state:
 
                         #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/365a61d9e72f3e175c39d5fa6cb1c189e0c70ffa/vars_Template_ETV_Metrel_VATIA5.docx?raw=true"
 
-                        var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/479f25e8ed4e14778956a202bc738378a01d3d3e/plantilla_Word_VATIA_NoGenerada.docx?raw=true"
+                        var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/7e75c8763f91cf589a5436fd2c3f4bc3741d6638/plantilla_Word_VATIA_NoGenerada.docx?raw=true"
 
                         #print(f"Has elegido no visualizar la información de la Energía Generada {e}")
                         #return  # Salir del menú
@@ -1233,10 +1233,10 @@ if 'correo_electronico' in st.session_state:
                     list_Columns_Grafico_FactorPot_Generado: list = obtener_Columnas_DataFrame(dataFrame=df_Tabla_FactorPotencia, nombres_Fijos_Columnas=['PFetotcap-(Med)', 'PFetotind-(Med)'], valores_Corchetes=[''])
                     print(f"Listado de Columnas Factor de Potencia (Generado): {list_Columns_Grafico_FactorPot_Generado}")
 
-                    list_Columns_Graficos_Consolidado_Energia: list = ['Eptot+(Med) [kWh]', 'EQtotind+(Med) [kvarh]', 'EQtotcap+(Med) [kvarh]', 'KARH_IND', 'KVARH_CAP']
+                    list_Columns_Graficos_Consolidado_Energia: list = ['Eptot+(Med) [kWh]', 'EQtotind+(Med) [kVARh]', 'EQtotcap+(Med) [kVARh]', 'KARH_IND', 'KVARH_CAP']
                     print(f"Listado de Columnas de Energías: {list_Columns_Graficos_Consolidado_Energia}")
 
-                    list_Columns_Graficos_Consolidado_Energia_Generada: list = ['Eptot-(Med) [kWh]', 'EQtotind-(Med) [kvarh]', 'EQtotcap-(Med) [kvarh]', 'KARH_IND', 'KVARH_CAP']
+                    list_Columns_Graficos_Consolidado_Energia_Generada: list = ['Eptot-(Med) [kWh]', 'EQtotind-(Med) [kVARh]', 'EQtotcap-(Med) [kVARh]', 'KARH_IND', 'KVARH_CAP']
                     print(f"Listado de Columnas de Energías Generadas: {list_Columns_Graficos_Consolidado_Energia_Generada}")
 
                     # Aquí tenemos una lista de las columnas que se van a graficar a través del tiempo para el Análisis de Distorsión de Tensión

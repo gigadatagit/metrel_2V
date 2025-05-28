@@ -323,7 +323,7 @@ if 'correo_electronico' in st.session_state:
                         
                         #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/b7b8b3cb4c88de73ed5db3e843935526b4c17ec3/vars_Template_ETV_Metrel_VATIA_Generada.docx?raw=true"
 
-                        var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/589d224bd577d42354dc4b23067bc5bad22b9c91/plantilla_Word_VATIA_Generada.docx?raw=true"
+                        var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/1b9b007bb3b463e30b86f95f34e60b33998ee122/plantilla_Word_VATIA_Generada.docx?raw=true"
 
                     else:
                         
@@ -331,7 +331,7 @@ if 'correo_electronico' in st.session_state:
 
                         #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/365a61d9e72f3e175c39d5fa6cb1c189e0c70ffa/vars_Template_ETV_Metrel_VATIA5.docx?raw=true"
 
-                        var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/479f25e8ed4e14778956a202bc738378a01d3d3e/plantilla_Word_VATIA_NoGenerada.docx?raw=true"
+                        var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/7e75c8763f91cf589a5436fd2c3f4bc3741d6638/plantilla_Word_VATIA_NoGenerada.docx?raw=true"
 
                         #print(f"Has elegido no visualizar la información de la Energía Generada {e}")
                         #return  # Salir del menú
