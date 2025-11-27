@@ -3,6 +3,8 @@ import streamlit as st  # Librería para crear aplicaciones web interactivas. In
 import pandas as pd  # Librería para manipulación y análisis de datos. Instalación: pip install pandas
 import os
 import random
+import io
+from io import BytesIO
 from bd import query_to_df
 from mailjet_rest import Client
 #from streamlit_cookies_controller import CookieController # Librería para manejar cookies en Streamlit. Instalación: pip install streamlit-cookies-controller

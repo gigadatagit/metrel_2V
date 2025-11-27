@@ -5,6 +5,8 @@ import datetime as dt
 import psycopg2
 from sqlalchemy import create_engine, text
 from configparser import ConfigParser
+import io
+from io import BytesIO
 
 DB_USERNAME=st.secrets.database.DB_USERNAME
 DB_PASSWORD=st.secrets.database.DB_PASSWORD

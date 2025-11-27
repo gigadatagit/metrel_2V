@@ -6,12 +6,12 @@ import matplotlib.dates as mdates
 import plotly.graph_objects as go
 import plotly.io as pio
 import streamlit as st
+import io
 #import os
 from PIL import Image, ImageOps
 from docx.shared import Cm
 from io import BytesIO
 from docxtpl import InlineImage
-
 import geopandas as gpd
 from shapely.geometry import Point
 import contextily as cx
