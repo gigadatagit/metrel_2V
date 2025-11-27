@@ -372,7 +372,7 @@ if 'correo_electronico' in st.session_state:
 
                         #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/365a61d9e72f3e175c39d5fa6cb1c189e0c70ffa/vars_Template_ETV_Metrel_VATIA5.docx?raw=true"
 
-                        var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/f4d019f75b83dcc1a647d5cd71bc14518d5c4f44/plantilla_Word_VATIA_NoGenerada.docx?raw=true"
+                        var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/71134b28273d4b37fff80fe93acfabdcb4c52177/plantilla_Word_VATIA_NoGenerada.docx?raw=true"
 
                         #print(f"Has elegido no visualizar la información de la Energía Generada {e}")
                         #return  # Salir del menú
@@ -384,7 +384,7 @@ if 'correo_electronico' in st.session_state:
                     response = requests.get(url)
 
                     # Guardado de contenido de la Plantilla de Word en un el Almacenamiento de Memoria
-                    template_data = BytesIO(response.content)
+                    template_data = io.BytesIO(response.content)
 
                     # Crear una instancia de DocxTemplate - Carga el contenido de la Plantilla del Documento de Word
                     doc = DocxTemplate(template_data)
