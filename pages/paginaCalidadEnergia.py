@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.express as px
 import io
+import os
 import plotly.graph_objects as go
 import requests
 import zipfile
@@ -13,6 +14,7 @@ from shapely.geometry import Point
 import contextily as cx
 from datetime import datetime
 from staticmap import StaticMap, CircleMarker
+from io import BytesIO
 
 from datetime import datetime
 from docxtpl import DocxTemplate, InlineImage
