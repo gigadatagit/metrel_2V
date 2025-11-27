@@ -7,11 +7,19 @@ import plotly.graph_objects as go
 import requests
 import zipfile
 import login as login
+
+import geopandas as gpd
+from shapely.geometry import Point
+import contextily as cx
+from datetime import datetime
+from staticmap import StaticMap, CircleMarker
+
+from datetime import datetime
 from docxtpl import DocxTemplate, InlineImage
 from docx.shared import Cm
 from docx.shared import Mm
 from io import BytesIO
-from utilities import calcular_Valor_Tension_Nominal, calcular_Valor_Corriente_Nominal, renombrar_columnas, obtener_Columnas_DataFrame, convertir_Unidades, seleccionar_Energia_Generada, crear_Medidas_DataFrame_Energias, filtrar_DataFrame_Columnas, crear_DataFrame_Tension, crear_DataFrame_Desbalance_Tension, crear_DataFrame_Corriente, crear_DataFrame_Desbalance_Corriente, crear_DataFrame_PQS_Potencias, crear_DataFrame_FactPotencia, crear_DataFrame_DistTension, crear_DataFrame_Armonicos_DistTension, crear_DataFrame_DistCorriente, crear_DataFrame_Armonicos_DistCorriente, crear_DataFrame_Flicker_Final, crear_DataFrame_FactorK_Final, calcular_Valor_Corriente_Cortacircuito, calcular_Valor_ISC_entre_IL, calcular_Valor_Limite_TDD, calcular_Valores_Limites_Armonicos, crear_DataFrame_CargabilidadTDD_Final, crear_Medidas_DataFrame_Tension, crear_Medidas_DataFrame_DesbTension, crear_Medidas_DataFrame_Corriente, crear_Medidas_DataFrame_DesbCorriente, crear_Medidas_DataFrame_PQS, crear_Medidas_DataFrame_FactorPotencia, crear_Medidas_DataFrame_Distorsion_Tension, crear_Medidas_DataFrame_Armonicos_DistTension, crear_Medidas_DataFrame_Distorsion_Corriente, crear_Medidas_DataFrame_Armonicos_DistCorriente, crear_Medidas_DataFrame_CargabilidadTDD, crear_Medidas_DataFrame_Flicker, crear_Medidas_DataFrame_FactorK, crear_DataFrame_Energias, calcular_Variacion_Tension, calcular_Valor_Cargabilidad_Disponibilidad, calcular_Observacion_Tension, calcular_Observacion_Corriente, calcular_Observacion_DesbTension, calcular_Observacion_DesbCorriente, calcular_Observacion_THDV, calcular_Observacion_Armonicos_Corriente, calcular_Observacion_TDD, graficar_Timeline_Tension, graficar_Timeline_Corriente, graficar_Timeline_DesbTension, graficar_Timeline_DesbCorriente, graficar_Timeline_PQS_ActApa, graficar_Timeline_PQS_CapInd, graficar_Timeline_FactPotencia, graficar_Timeline_Distorsion_Tension, graficar_Timeline_Distorsion_Corriente, graficar_Timeline_CargabilidadTDD, graficar_Timeline_Flicker, graficar_Timeline_FactorK, generar_Graficos_Barras_Energias, graficar_Timeline_Tension_Plotly, graficar_Timeline_Corriente_Plotly, graficar_Timeline_DesbTension_Plotly, graficar_Timeline_DesbCorriente_Plotly, graficar_Timeline_PQS_ActApa_Plotly, graficar_Timeline_PQS_CapInd_Plotly, graficar_Timeline_FactPotencia_Plotly, graficar_Timeline_Distorsion_Tension_Plotly, graficar_Timeline_Distorsion_Corriente_Plotly, graficar_Timeline_CargabilidadTDD_Plotly, graficar_Timeline_Flicker_Plotly, graficar_Timeline_FactorK_Plotly, generar_Graficos_Barras_Energias_Plotly
+from utilities import calcular_Valor_Tension_Nominal, calcular_Valor_Corriente_Nominal, renombrar_columnas, obtener_Columnas_DataFrame, convertir_Unidades, seleccionar_Energia_Generada, crear_Medidas_DataFrame_Energias, filtrar_DataFrame_Columnas, crear_DataFrame_Tension, crear_DataFrame_Desbalance_Tension, crear_DataFrame_Corriente, crear_DataFrame_Desbalance_Corriente, crear_DataFrame_PQS_Potencias, crear_DataFrame_FactPotencia, crear_DataFrame_DistTension, crear_DataFrame_Armonicos_DistTension, crear_DataFrame_DistCorriente, crear_DataFrame_Armonicos_DistCorriente, crear_DataFrame_Flicker_Final, crear_DataFrame_FactorK_Final, calcular_Valor_Corriente_Cortacircuito, calcular_Valor_ISC_entre_IL, calcular_Valor_Limite_TDD, calcular_Valores_Limites_Armonicos, crear_DataFrame_CargabilidadTDD_Final, crear_Medidas_DataFrame_Tension, crear_Medidas_DataFrame_DesbTension, crear_Medidas_DataFrame_Corriente, crear_Medidas_DataFrame_DesbCorriente, crear_Medidas_DataFrame_PQS, crear_Medidas_DataFrame_FactorPotencia, crear_Medidas_DataFrame_Distorsion_Tension, crear_Medidas_DataFrame_Armonicos_DistTension, crear_Medidas_DataFrame_Distorsion_Corriente, crear_Medidas_DataFrame_Armonicos_DistCorriente, crear_Medidas_DataFrame_CargabilidadTDD, crear_Medidas_DataFrame_Flicker, crear_Medidas_DataFrame_FactorK, crear_DataFrame_Energias, calcular_Variacion_Tension, calcular_Valor_Cargabilidad_Disponibilidad, calcular_Observacion_Tension, calcular_Observacion_Corriente, calcular_Observacion_DesbTension, calcular_Observacion_DesbCorriente, calcular_Observacion_THDV, calcular_Observacion_Armonicos_Corriente, calcular_Observacion_TDD, graficar_Timeline_Tension, graficar_Timeline_Corriente, graficar_Timeline_DesbTension, graficar_Timeline_DesbCorriente, graficar_Timeline_PQS_ActApa, graficar_Timeline_PQS_CapInd, graficar_Timeline_FactPotencia, graficar_Timeline_Distorsion_Tension, graficar_Timeline_Distorsion_Corriente, graficar_Timeline_CargabilidadTDD, graficar_Timeline_Flicker, graficar_Timeline_FactorK, generar_Graficos_Barras_Energias, graficar_Timeline_Tension_Plotly, graficar_Timeline_Corriente_Plotly, graficar_Timeline_DesbTension_Plotly, graficar_Timeline_DesbCorriente_Plotly, graficar_Timeline_PQS_ActApa_Plotly, graficar_Timeline_PQS_CapInd_Plotly, graficar_Timeline_FactPotencia_Plotly, graficar_Timeline_Distorsion_Tension_Plotly, graficar_Timeline_Distorsion_Corriente_Plotly, graficar_Timeline_CargabilidadTDD_Plotly, graficar_Timeline_Flicker_Plotly, graficar_Timeline_FactorK_Plotly, generar_Graficos_Barras_Energias_Plotly, get_map_png_bytes
 
 archivo = __file__.split("/")[-1]
 login.generarLogin(archivo)
@@ -91,7 +99,38 @@ if 'correo_electronico' in st.session_state:
             ---
             """)
 
-            plantillaSeleccionada = st.selectbox("Selecciona una Plantilla:", ["Vatia", "GIGA"])
+            plantillaSeleccionada = st.selectbox("Selecciona una Plantilla:", ["Vatia"])
+            
+            st.markdown("""
+            ---
+            
+            > ## Formulario de inicio - Información General.
+            
+            ---
+            """)
+
+            nombreProyecto = st.text_input("Ingrese el Valor del Nombre del Proyecto")
+            nombreCiudadoMunicipio = st.text_input("Ingrese el Valor de la Ciudad o Municipio")
+            nombreDepartamento = st.text_input("Ingrese el Valor del Departamento")
+            tipoCoordenada = st.selectbox("Seleccione el Tipo de Imagen para las Coordenadas", ["Urbano", "Rural"])
+            nombreCompleto = st.text_input("Ingrese el Valor del Nombre Completo")
+            nroConteoTarjeta = st.text_input("Ingrese el Valor del Número de CONTE o Tarjeta Profesional")
+            nombreCargo = st.text_input("Ingrese el Valor del Nombre del Cargo")
+            actividadRealizada = st.text_input("Ingrese el Valor de la Actividad Realizada")
+            fechaCreacionSinFormato = st.date_input("Seleccione la Fecha de Creación", value=datetime.now())
+            fechaCreacion = fechaCreacionSinFormato.strftime("%Y-%m-%d")
+            barrioProyecto = st.text_input("Ingrese el Valor del Barrio")
+            direccionProyecto = st.text_input("Ingrese el Valor de la Dirección")
+            
+            latitud = st.number_input("Latitud", key='latitud', format="%.6f")
+            longitud = st.number_input("Longitud", key='longitud', format="%.6f")
+            
+            ahora = datetime.now()
+            meses = ["ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE"]
+            dia = ahora.day
+            mes = meses[ahora.month-1]
+            anio = ahora.year
+            
             
             st.markdown("""
             ---
@@ -323,7 +362,7 @@ if 'correo_electronico' in st.session_state:
                         
                         #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/b7b8b3cb4c88de73ed5db3e843935526b4c17ec3/vars_Template_ETV_Metrel_VATIA_Generada.docx?raw=true"
 
-                        var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/1b9b007bb3b463e30b86f95f34e60b33998ee122/plantilla_Word_VATIA_Generada.docx?raw=true"
+                        var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/f4d019f75b83dcc1a647d5cd71bc14518d5c4f44/plantilla_Word_VATIA_Generada.docx?raw=true"
 
                     else:
                         
@@ -331,7 +370,7 @@ if 'correo_electronico' in st.session_state:
 
                         #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/365a61d9e72f3e175c39d5fa6cb1c189e0c70ffa/vars_Template_ETV_Metrel_VATIA5.docx?raw=true"
 
-                        var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/7e75c8763f91cf589a5436fd2c3f4bc3741d6638/plantilla_Word_VATIA_NoGenerada.docx?raw=true"
+                        var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/f4d019f75b83dcc1a647d5cd71bc14518d5c4f44/plantilla_Word_VATIA_NoGenerada.docx?raw=true"
 
                         #print(f"Has elegido no visualizar la información de la Energía Generada {e}")
                         #return  # Salir del menú
@@ -1421,6 +1460,45 @@ if 'correo_electronico' in st.session_state:
 
                     # Contexto básico que recibe el documento de Word (Se accede a él usando el nombre de la llave del diccionario)
                     if visualizacion_Generada == True:
+                        
+                        if tipoCoordenada == "Urbano":
+            
+                            if latitud and longitud:
+                                try:
+                                    lat = float(str(latitud).replace(',', '.'))
+                                    lon = float(str(longitud).replace(',', '.'))
+                                    mapa = StaticMap(600, 400)
+                                    mapa.add_marker(CircleMarker((lon, lat), 'red', 12))
+                                    img_map = mapa.render()
+                                    buf_map = io.BytesIO()
+                                    img_map.save(buf_map, format='PNG')
+                                    buf_map.seek(0)
+                                    imgMapsProyecto = InlineImage(doc, buf_map, Cm(18))
+                                except Exception as e:
+                                    st.error(f"Coordenadas inválidas para el mapa. {e}")
+                            else:
+                                st.error("Faltan coordenadas para el mapa.")
+                                    
+                        else:
+                                
+                            if latitud and longitud:
+                                try:
+                                    lat = float(str(latitud).replace(',', '.'))
+                                    lon = float(str(longitud).replace(',', '.'))
+                                    
+                                    st.warning(f"Prueba de coordenada en modo rural (latitud): {lat}")
+                                    st.warning(f"Prueba de coordenada en modo rural (longitud): {lon}")
+                                        
+                                    png_bytes = get_map_png_bytes(lon, lat, buffer_m=300, zoom=17)
+                                        
+                                    buf_map = io.BytesIO(png_bytes)
+                                    buf_map.seek(0)
+                                    imgMapsProyecto = InlineImage(doc, buf_map, Cm(18))
+                                except Exception as e:
+                                    st.error(f"Coordenadas inválidas para el mapa. {e}")
+                            else:
+                                st.error("Faltan coordenadas para el mapa.")
+                        
 
                         registro = {
                             'var_Lim_Inf_Tension': round(var_Limite_Inferior_Tension, 2),
@@ -1428,6 +1506,20 @@ if 'correo_electronico' in st.session_state:
                             'var_Lim_Sup_Tension': round(var_Limite_Superior_Tension, 2),
                             'var_Cap_Trafo': round(var2, 2),
                             'var_Corr_Nominal_Value': round(var_Corriente_Nominal_Value, 2),
+                            
+                            'nombreCompleto': nombreCompleto,
+                            'nombreCargo': nombreCargo,
+                            'nroConteoTarjeta': nroConteoTarjeta,
+                            'actividadRealizada': actividadRealizada,
+                            'nombreProyecto': nombreProyecto,
+                            'direccionProyecto': direccionProyecto,
+                            'nombreCiudadoMunicipio': nombreCiudadoMunicipio,
+                            'nombreDepartamento': nombreDepartamento,
+                            'dia': dia,
+                            'mes': mes,
+                            'anio': anio,
+                            'imgMapsProyecto': imgMapsProyecto,
+                            
                             'imagen_Linea_Tiempo_Tension': img_Timeline_Tension,
                             'imagen_Linea_Tiempo_Corriente': img_Timeline_Corriente,
                             'imagen_Linea_Tiempo_DesbTension': img_Timeline_DesbTension,
@@ -2004,6 +2096,44 @@ if 'correo_electronico' in st.session_state:
                         }
 
                     else:
+                        
+                        if tipoCoordenada == "Urbano":
+            
+                            if latitud and longitud:
+                                try:
+                                    lat = float(str(latitud).replace(',', '.'))
+                                    lon = float(str(longitud).replace(',', '.'))
+                                    mapa = StaticMap(600, 400)
+                                    mapa.add_marker(CircleMarker((lon, lat), 'red', 12))
+                                    img_map = mapa.render()
+                                    buf_map = io.BytesIO()
+                                    img_map.save(buf_map, format='PNG')
+                                    buf_map.seek(0)
+                                    imgMapsProyecto = InlineImage(doc, buf_map, Cm(18))
+                                except Exception as e:
+                                    st.error(f"Coordenadas inválidas para el mapa. {e}")
+                            else:
+                                st.error("Faltan coordenadas para el mapa.")
+                                    
+                        else:
+                                
+                            if latitud and longitud:
+                                try:
+                                    lat = float(str(latitud).replace(',', '.'))
+                                    lon = float(str(longitud).replace(',', '.'))
+                                    
+                                    st.warning(f"Prueba de coordenada en modo rural (latitud): {lat}")
+                                    st.warning(f"Prueba de coordenada en modo rural (longitud): {lon}")
+                                        
+                                    png_bytes = get_map_png_bytes(lon, lat, buffer_m=300, zoom=17)
+                                        
+                                    buf_map = io.BytesIO(png_bytes)
+                                    buf_map.seek(0)
+                                    imgMapsProyecto = InlineImage(doc, buf_map, Cm(18))
+                                except Exception as e:
+                                    st.error(f"Coordenadas inválidas para el mapa. {e}")
+                            else:
+                                st.error("Faltan coordenadas para el mapa.")
 
                         registro = {
                             'var_Lim_Inf_Tension': round(var_Limite_Inferior_Tension, 2),
@@ -2011,6 +2141,20 @@ if 'correo_electronico' in st.session_state:
                             'var_Lim_Sup_Tension': round(var_Limite_Superior_Tension, 2),
                             'var_Cap_Trafo': round(var2, 2),
                             'var_Corr_Nominal_Value': round(var_Corriente_Nominal_Value, 2),
+                            
+                            'nombreCompleto': nombreCompleto,
+                            'nombreCargo': nombreCargo,
+                            'nroConteoTarjeta': nroConteoTarjeta,
+                            'actividadRealizada': actividadRealizada,
+                            'nombreProyecto': nombreProyecto,
+                            'direccionProyecto': direccionProyecto,
+                            'nombreCiudadoMunicipio': nombreCiudadoMunicipio,
+                            'nombreDepartamento': nombreDepartamento,
+                            'dia': dia,
+                            'mes': mes,
+                            'anio': anio,
+                            'imgMapsProyecto': imgMapsProyecto,
+                            
                             'imagen_Linea_Tiempo_Tension': img_Timeline_Tension,
                             'imagen_Linea_Tiempo_Corriente': img_Timeline_Corriente,
                             'imagen_Linea_Tiempo_DesbTension': img_Timeline_DesbTension,

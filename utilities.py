@@ -12,6 +12,46 @@ from docx.shared import Cm
 from io import BytesIO
 from docxtpl import InlineImage
 
+import geopandas as gpd
+from shapely.geometry import Point
+import contextily as cx
+from datetime import datetime
+from staticmap import StaticMap, CircleMarker
+
+def get_map_png_bytes(lon, lat, buffer_m=300, width_px=900, height_px=700, zoom=17):
+    """
+    Genera un PNG (bytes) de un mapa satelital con marcador en (lon, lat).
+    - buffer_m: radio en metros alrededor del punto (controla "zoom").
+    - zoom: nivel de teselas (18-19 suele ser bueno).
+    """
+    # Crear punto y reproyectar a Web Mercator
+    gdf = gpd.GeoDataFrame(geometry=[Point(lon, lat)], crs="EPSG:4326").to_crs(epsg=3857)
+    pt = gdf.geometry.iloc[0]
+    
+    # Calcular bounding box
+    bbox = (pt.x - buffer_m, pt.y - buffer_m, pt.x + buffer_m, pt.y + buffer_m)
+
+    # Crear figura
+    fig, ax = plt.subplots(figsize=(width_px/100, height_px/100), dpi=100)
+    ax.set_xlim(bbox[0], bbox[2])
+    ax.set_ylim(bbox[1], bbox[3])
+
+    # Añadir basemap (Esri World Imagery)
+    cx.add_basemap(ax, source=cx.providers.Esri.WorldImagery, crs="EPSG:3857", zoom=zoom)
+
+    # Dibujar marcador
+    gdf.plot(ax=ax, markersize=40, color="red")
+
+    ax.set_axis_off()
+    plt.tight_layout(pad=0)
+
+    # Guardar a buffer en memoria
+    buf = io.BytesIO()
+    plt.savefig(buf, format="png", bbox_inches="tight", pad_inches=0)
+    plt.close(fig)
+    buf.seek(0)
+    return buf.getvalue()
+
 def calcular_Valor_Tension_Nominal(valor_Nominal: float):
 
     """
