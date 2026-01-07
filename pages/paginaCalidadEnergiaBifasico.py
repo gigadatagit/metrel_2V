@@ -32,7 +32,9 @@ if 'correo_electronico' in st.session_state:
             
             df = pd.read_parquet(uploaded_file)
             
-            columns_to_drop = [col for col in df.columns if 'U12' in col]
+            #columns_to_drop = [col for col in df.columns if 'U12' in col]
+            
+            columns_to_drop = ['U12(Min) [V]', 'U12(Max) [V]', 'U12(Med) [V]']
 
             # Drop the identified columns
             df = df.drop(columns=columns_to_drop)
