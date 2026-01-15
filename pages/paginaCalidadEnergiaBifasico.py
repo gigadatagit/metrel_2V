@@ -314,13 +314,19 @@ if 'correo_electronico' in st.session_state:
 
                             var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/0c25e2bcd5194ec1a9153caebb8c8044ff890094/plantilla_Word_VATIA_Generada.docx?raw=true"
                             
+                            pass
+                            
                         elif plantillaSeleccionada == "ERCO":
                             
                             var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/2e357b0eac909fa63b7dbff2c4c5db497c3bd3fe/plantilla_Word_ERCO_Generada.docx?raw=true"
                             
+                            pass
+                            
                         else:
                             
                             st.write("Plantilla no reconocida.")
+                            
+                            pass
 
                     else:
                         
@@ -332,13 +338,21 @@ if 'correo_electronico' in st.session_state:
 
                             var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/88c3e251be32ccc36b4ff2e152107a4e94fa1c47/plantilla_Word_VATIA_NoGenerada.docx?raw=true"
                             
+                            pass
+                            
                         elif plantillaSeleccionada == "ERCO":
                             
                             var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/2e357b0eac909fa63b7dbff2c4c5db497c3bd3fe/plantilla_Word_ERCO_NoGenerada.docx?raw=true"
                             
+                            pass
+                            
                         else:
                             
                             st.write("Plantilla no reconocida.")
+                            
+                            pass
+                        
+                        pass
 
                         #print(f"Has elegido no visualizar la información de la Energía Generada {e}")
                         #return  # Salir del menú
@@ -707,6 +721,10 @@ if 'correo_electronico' in st.session_state:
                     """)
 
                     dataFrame_Energias = crear_DataFrame_Energias(dataFrame=df)
+                    
+                    columnas_Energias_A_Redondear = ['Eptot+(Med) [kWh]', 'EQtotcap+(Med) [kVARh]', 'EQtotind+(Med) [kVARh]', 'PFetotcap+(Med) []', 'PFetotind+(Med) []', 'PFetotcap-(Med) []', 'PFetotind-(Med) []', 'KVARH_CAP', 'KARH_IND']
+
+                    dataFrame_Energias[columnas_Energias_A_Redondear] = dataFrame_Energias[columnas_Energias_A_Redondear].round(3)
 
                     st.dataframe(dataFrame_Energias.head(5))
 
