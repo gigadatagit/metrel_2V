@@ -10,6 +10,7 @@ import login as login
 from docxtpl import DocxTemplate, InlineImage
 from docx.shared import Cm
 from docx.shared import Mm
+from datetime import datetime
 from io import BytesIO
 from utilities import calcular_Valor_Tension_Nominal, calcular_Valor_Corriente_Nominal, renombrar_columnas, obtener_Columnas_DataFrame, convertir_Unidades, seleccionar_Energia_Generada, crear_Medidas_DataFrame_Energias, filtrar_DataFrame_Columnas, crear_DataFrame_Tension, crear_DataFrame_Desbalance_Tension, crear_DataFrame_Corriente, crear_DataFrame_Desbalance_Corriente, crear_DataFrame_PQS_Potencias, crear_DataFrame_FactPotencia, crear_DataFrame_DistTension, crear_DataFrame_Armonicos_DistTension, crear_DataFrame_DistCorriente, crear_DataFrame_Armonicos_DistCorriente, crear_DataFrame_Flicker_Final, crear_DataFrame_FactorK_Final, calcular_Valor_Corriente_Cortacircuito, calcular_Valor_ISC_entre_IL, calcular_Valor_Limite_TDD, calcular_Valores_Limites_Armonicos, crear_DataFrame_CargabilidadTDD_Final, crear_Medidas_DataFrame_Tension, crear_Medidas_DataFrame_DesbTension, crear_Medidas_DataFrame_Corriente, crear_Medidas_DataFrame_DesbCorriente, crear_Medidas_DataFrame_PQS, crear_Medidas_DataFrame_FactorPotencia, crear_Medidas_DataFrame_Distorsion_Tension, crear_Medidas_DataFrame_Armonicos_DistTension, crear_Medidas_DataFrame_Distorsion_Corriente, crear_Medidas_DataFrame_Armonicos_DistCorriente, crear_Medidas_DataFrame_CargabilidadTDD, crear_Medidas_DataFrame_Flicker, crear_Medidas_DataFrame_FactorK, crear_DataFrame_Energias, calcular_Variacion_Tension, calcular_Valor_Cargabilidad_Disponibilidad, calcular_Observacion_Tension, calcular_Observacion_Corriente, calcular_Observacion_DesbTension, calcular_Observacion_DesbCorriente, calcular_Observacion_THDV, calcular_Observacion_Armonicos_Corriente, calcular_Observacion_TDD, graficar_Timeline_Tension, graficar_Timeline_Corriente, graficar_Timeline_DesbTension, graficar_Timeline_DesbCorriente, graficar_Timeline_PQS_ActApa, graficar_Timeline_PQS_CapInd, graficar_Timeline_FactPotencia, graficar_Timeline_Distorsion_Tension, graficar_Timeline_Distorsion_Corriente, graficar_Timeline_CargabilidadTDD, graficar_Timeline_Flicker, graficar_Timeline_FactorK, generar_Graficos_Barras_Energias, graficar_Timeline_Tension_Plotly, graficar_Timeline_Corriente_Plotly, graficar_Timeline_DesbTension_Plotly, graficar_Timeline_DesbCorriente_Plotly, graficar_Timeline_PQS_ActApa_Plotly, graficar_Timeline_PQS_CapInd_Plotly, graficar_Timeline_FactPotencia_Plotly, graficar_Timeline_Distorsion_Tension_Plotly, graficar_Timeline_Distorsion_Corriente_Plotly, graficar_Timeline_CargabilidadTDD_Plotly, graficar_Timeline_Flicker_Plotly, graficar_Timeline_FactorK_Plotly, generar_Graficos_Barras_Energias_Plotly, get_map_png_bytes
 
@@ -84,6 +85,36 @@ if 'correo_electronico' in st.session_state:
             """)
 
             plantillaSeleccionada = st.selectbox("Selecciona una Plantilla:", ["Vatia", "ERCO"])
+            
+            st.markdown("""
+            ---
+            
+            > ## Formulario de inicio - Información General.
+            
+            ---
+            """)
+
+            nombreProyecto = st.text_input("Ingrese el Valor del Nombre del Proyecto")
+            nombreCiudadoMunicipio = st.text_input("Ingrese el Valor de la Ciudad o Municipio")
+            nombreDepartamento = st.text_input("Ingrese el Valor del Departamento")
+            tipoCoordenada = st.selectbox("Seleccione el Tipo de Imagen para las Coordenadas", ["Urbano", "Rural"])
+            nombreCompleto = st.text_input("Ingrese el Valor del Nombre Completo")
+            nroConteoTarjeta = st.text_input("Ingrese el Valor del Número de CONTE o Tarjeta Profesional")
+            nombreCargo = st.text_input("Ingrese el Valor del Nombre del Cargo")
+            actividadRealizada = st.text_input("Ingrese el Valor de la Actividad Realizada")
+            fechaCreacionSinFormato = st.date_input("Seleccione la Fecha de Creación", value=datetime.now())
+            fechaCreacion = fechaCreacionSinFormato.strftime("%Y-%m-%d")
+            barrioProyecto = st.text_input("Ingrese el Valor del Barrio")
+            direccionProyecto = st.text_input("Ingrese el Valor de la Dirección")
+            
+            latitud = st.number_input("Latitud", key='latitud', format="%.6f")
+            longitud = st.number_input("Longitud", key='longitud', format="%.6f")
+            
+            ahora = datetime.now()
+            meses = ["ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE"]
+            dia = ahora.day
+            mes = meses[ahora.month-1]
+            anio = ahora.year
             
             st.markdown("""
             ---
