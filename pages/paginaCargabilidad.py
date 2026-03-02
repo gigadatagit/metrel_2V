@@ -319,6 +319,7 @@ if 'correo_electronico' in st.session_state:
 
                             var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/0c25e2bcd5194ec1a9153caebb8c8044ff890094/plantilla_Word_VATIA_Generada.docx?raw=true"
                             
+                            
                             pass
                             
                         elif plantillaSeleccionada == "ERCO":
@@ -341,13 +342,17 @@ if 'correo_electronico' in st.session_state:
 
                             #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/365a61d9e72f3e175c39d5fa6cb1c189e0c70ffa/vars_Template_ETV_Metrel_VATIA5.docx?raw=true"
 
-                            var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/88c3e251be32ccc36b4ff2e152107a4e94fa1c47/plantilla_Word_VATIA_NoGenerada.docx?raw=true"
+                            #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/88c3e251be32ccc36b4ff2e152107a4e94fa1c47/plantilla_Word_VATIA_NoGenerada.docx?raw=true"
+                            
+                            var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/140fd039570824f0bced5b2e6f7a6a808f7c4d07/plantilla_Word_VATIA_Cargabilidad_NoGenerada.docx?raw=true"
                             
                             pass
                             
                         elif plantillaSeleccionada == "ERCO":
                             
-                            var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/2e357b0eac909fa63b7dbff2c4c5db497c3bd3fe/plantilla_Word_ERCO_NoGenerada.docx?raw=true"
+                            #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/2e357b0eac909fa63b7dbff2c4c5db497c3bd3fe/plantilla_Word_ERCO_NoGenerada.docx?raw=true"
+                            
+                            var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/140fd039570824f0bced5b2e6f7a6a808f7c4d07/plantilla_Word_ERCO_Cargabilidad_NoGenerada.docx?raw=true"
                             
                             pass
                             
