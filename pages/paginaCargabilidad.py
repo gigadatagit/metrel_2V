@@ -2719,7 +2719,7 @@ if 'correo_electronico' in st.session_state:
                     
                 except Exception as e:
                     
-                    print(f"Hubo un error al generar el informe: {e}")
+                    print(f"Hubo un error al generar el informe: {e} - {e.args}")
 
             
         except Exception as e:

@@ -139,7 +139,7 @@ if 'correo_electronico' in st.session_state:
             ---
             """)
             
-            energiaGenerada = st.selectbox("Seleccione si quiere visualizar o no la Energía Generada:", ["Sí", "No"], index=1)
+            energiaGenerada = st.selectbox("Seleccione si quiere visualizar o no la Energía Generada:", ["No"])
             
             st.markdown("""
             ---
@@ -363,13 +363,17 @@ if 'correo_electronico' in st.session_state:
                         
                             #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/b7b8b3cb4c88de73ed5db3e843935526b4c17ec3/vars_Template_ETV_Metrel_VATIA_Generada.docx?raw=true"
 
-                            var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/0c25e2bcd5194ec1a9153caebb8c8044ff890094/plantilla_Word_VATIA_Generada.docx?raw=true"
+                            #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/0c25e2bcd5194ec1a9153caebb8c8044ff890094/plantilla_Word_VATIA_Generada.docx?raw=true"
+                            
+                            var_Enlace_Plantilla = "templates/plantilla_Word_VATIA_Generada.docx"
                             
                             pass
                             
                         elif plantillaSeleccionada == "ERCO":
                             
-                            var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/2e357b0eac909fa63b7dbff2c4c5db497c3bd3fe/plantilla_Word_ERCO_Generada.docx?raw=true"
+                            #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/2e357b0eac909fa63b7dbff2c4c5db497c3bd3fe/plantilla_Word_ERCO_Generada.docx?raw=true"
+                            
+                            var_Enlace_Plantilla = "templates/plantilla_Word_ERCO_Generada.docx"
                             
                             pass
                             
@@ -389,7 +393,11 @@ if 'correo_electronico' in st.session_state:
 
                             #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/88c3e251be32ccc36b4ff2e152107a4e94fa1c47/plantilla_Word_VATIA_NoGenerada.docx?raw=true"
                             
-                            var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/140fd039570824f0bced5b2e6f7a6a808f7c4d07/plantilla_Word_VATIA_Cargabilidad_NoGenerada.docx?raw=true"
+                            #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/cf0b7fe4a7a5df2b74468d76c2f6909a19657a20/plantilla_Word_VATIA_Cargabilidad_NoGenerada.docx?raw=true"
+                            
+                            var_Enlace_Plantilla = "templates/plantilla_Word_VATIA_Cargabilidad_NoGenerada.docx"
+                            
+                            
                             
                             pass
                             
@@ -397,7 +405,9 @@ if 'correo_electronico' in st.session_state:
                             
                             #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/2e357b0eac909fa63b7dbff2c4c5db497c3bd3fe/plantilla_Word_ERCO_NoGenerada.docx?raw=true"
                             
-                            var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/140fd039570824f0bced5b2e6f7a6a808f7c4d07/plantilla_Word_ERCO_Cargabilidad_NoGenerada.docx?raw=true"
+                            #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/62117306985c98c4915d3d11f6fc1bccfde82707/plantilla_Word_ERCO_Cargabilidad_NoGenerada.docx?raw=true"
+                            
+                            var_Enlace_Plantilla = "templates/plantilla_Word_ERCO_Cargabilidad_NoGenerada.docx"
                             
                             pass
                             
@@ -413,18 +423,18 @@ if 'correo_electronico' in st.session_state:
                         #return  # Salir del menú
 
                     # Enlace a la Plantilla del Documento de Word que contiene toda la información del Informe
-                    url = var_Enlace_Plantilla
+                    #url = var_Enlace_Plantilla
 
                     # Petición para Traer la información de esa URL con la Plantilla
-                    response = requests.get(url)
+                    #response = requests.get(url)
 
                     # Guardado de contenido de la Plantilla de Word en un el Almacenamiento de Memoria
-                    template_data = io.BytesIO(response.content)
+                    #template_data = io.BytesIO(response.content)
 
                     # Crear una instancia de DocxTemplate - Carga el contenido de la Plantilla del Documento de Word
-                    doc = DocxTemplate(template_data)
+                    #doc = DocxTemplate(template_data)
 
-
+                    doc = DocxTemplate(var_Enlace_Plantilla)
 
                     # Aquí tenemos una lista de las columnas que se van a graficar a través del tiempo para la tensión
                     list_Columns_Grafico_Tension: list = obtener_Columnas_DataFrame(dataFrame=df, nombres_Fijos_Columnas=['U12(Med)', 'U23(Med)', 'U31(Med)'], valores_Corchetes=['V'])
@@ -4029,7 +4039,7 @@ if 'correo_electronico' in st.session_state:
                     
                 except Exception as e:
                     
-                    print(f"Hubo un error al generar el informe: {e}")
+                    print(f"Hubo un error al generar el informe: {e} - {e.args}")
 
             
         except Exception as e:
