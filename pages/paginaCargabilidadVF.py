@@ -33,6 +33,53 @@ if 'correo_electronico' in st.session_state:
             
             df = pd.read_parquet(uploaded_file)
             
+            mapeo_renombre_columnas = {
+                'EQfund1cap+(Med) [kvarh]': 'EQfund1cap+(Med) [varh]',
+                'EQfund2cap+(Med) [kvarh]': 'EQfund2cap+(Med) [varh]',
+                'EQfund3cap+(Med) [kvarh]': 'EQfund3cap+(Med) [varh]',
+                'EQfund1cap-(Med) [kvarh]': 'EQfund1cap-(Med) [varh]',
+                'EQfund2cap-(Med) [kvarh]': 'EQfund2cap-(Med) [varh]',
+                'EQfund3cap-(Med) [kvarh]': 'EQfund3cap-(Med) [varh]',
+                'EQfund1ind+(Med) [kvarh]': 'EQfund1ind+(Med) [varh]',
+                'EQfund2ind+(Med) [kvarh]': 'EQfund2ind+(Med) [varh]',
+                'EQfund3ind+(Med) [kvarh]': 'EQfund3ind+(Med) [varh]',
+                'EQfund1ind-(Med) [kvarh]': 'EQfund1ind-(Med) [varh]',
+                'EQfund2ind-(Med) [kvarh]': 'EQfund2ind-(Med) [varh]',
+                'EQfund3ind-(Med) [kvarh]': 'EQfund3ind-(Med) [varh]',
+                'Ptot+(Min) [kW]': 'Ptot+(Min) [W]',
+                'Ptot+(Max) [kW]': 'Ptot+(Max) [W]',
+                'Ptot+(Med) [kW]': 'Ptot+(Med) [W]',
+                'Setot+(Min) [kVA]': 'Setot+(Min) [VA]',
+                'Setot+(Max) [kVA]': 'Setot+(Max) [VA]',
+                'Setot+(Med) [kVA]': 'Setot+(Med) [VA]',
+                'Ntotcap-(Min) [kvar]': 'Ntotcap-(Min) [var]',
+                'Ntotcap-(Max) [kvar]': 'Ntotcap-(Max) [var]',
+                'Ntotcap-(Med) [kvar]': 'Ntotcap-(Med) [var]',
+                'Ntotind+(Min) [kvar]': 'Ntotind+(Min) [var]',
+                'Ntotind+(Max) [kvar]': 'Ntotind+(Max) [var]',
+                'Ntotind+(Med) [kvar]': 'Ntotind+(Med) [var]',
+                'Ep1-(Med) [kWh]': 'Ep1-(Med) [Wh]',
+                'Ep2-(Med) [kWh]': 'Ep2-(Med) [Wh]',
+                'Ep3-(Med) [kWh]': 'Ep3-(Med) [Wh]',
+                'Ep1+(Med) [kWh]': 'Ep1+(Med) [Wh]',
+                'Ep2+(Med) [kWh]': 'Ep2+(Med) [Wh]',
+                'Ep3+(Med) [kWh]': 'Ep3+(Med) [Wh]',
+                'Eptot+(Med) [kWh]': 'Eptot+(Med) [Wh]',
+                'Eptot-(Med) [kWh]': 'Eptot-(Med) [Wh]',
+            }
+
+            # Create a dictionary of only the columns that exist in the DataFrame
+            columnas_existentes_a_renombrar = {nombre_antiguo: nuevo_nombre 
+                                            for nombre_antiguo, nuevo_nombre in mapeo_renombre_columnas.items() 
+                                            if nombre_antiguo in df.columns}
+
+            # Rename the columns
+            df = df.rename(columns=columnas_existentes_a_renombrar)
+
+            print("Las columnas se han renombrado satisfactoriamente en aquellas que aplicaban.")
+            #print("DataFrame columns after attempted rename:")
+            #print(df.columns.tolist())
+            
             # Defino los listados “disparadores”
             listado1 = {
                 'EQfund1cap+(Med) [varh]', 'EQfund2cap+(Med) [varh]', 'EQfund3cap+(Med) [varh]',
