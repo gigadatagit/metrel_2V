@@ -36,8 +36,14 @@ if 'correo_electronico' in st.session_state:
             
             columns_to_drop = ['U12(Min) [V]', 'U12(Max) [V]', 'U12(Med) [V]']
 
-            # Drop the identified columns
-            df = df.drop(columns=columns_to_drop)
+            try: 
+
+                # Drop the identified columns
+                df = df.drop(columns=columns_to_drop)
+                
+            except Exception:
+                
+                print("No se encontraron las columnas a eliminar, por lo que no se realizó la eliminación de columnas.")
             
             mapeo_renombre_columnas = {
                 'EQfund1cap+(Med) [kvarh]': 'EQfund1cap+(Med) [varh]',
@@ -456,9 +462,9 @@ if 'correo_electronico' in st.session_state:
 
                     df_Tabla_FactorPotencia = filtrar_DataFrame_Columnas(dataFrame=df, nombres_Fijos_Columnas=['Hora', 'PFetotcap+(Min)', 'PFetotcap+(Med)', 'PFetotcap+(Max)', 'PFetotind+(Min)', 'PFetotind+(Med)', 'PFetotind+(Max)', 'PFetotcap-(Min)', 'PFetotcap-(Med)', 'PFetotcap-(Max)', 'PFetotind-(Min)', 'PFetotind-(Med)', 'PFetotind-(Max)'], valores_Corchetes=['UTC', ''])
 
-                    df_Tabla_Distorsion_Tension = filtrar_DataFrame_Columnas(dataFrame=df, nombres_Fijos_Columnas=['Hora', 'THD U12(Max)', 'THD U23(Max)'], valores_Corchetes=['UTC', '%'])
+                    df_Tabla_Distorsion_Tension = filtrar_DataFrame_Columnas(dataFrame=df, nombres_Fijos_Columnas=['Hora', 'THD U1(Max)', 'THD U2(Max)'], valores_Corchetes=['UTC', '%'])
 
-                    df_Tabla_Armonicos_Distorsion_Tension = filtrar_DataFrame_Columnas(dataFrame=df, nombres_Fijos_Columnas=['Hora', 'U12 a3(Max)', 'U12 a5(Max)', 'U12 a7(Max)', 'U12 a9(Max)', 'U12 a11(Max)', 'U12 a13(Max)', 'U12 a15(Max)', 'U23 a3(Max)', 'U23 a5(Max)', 'U23 a7(Max)', 'U23 a9(Max)', 'U23 a11(Max)', 'U23 a13(Max)', 'U23 a15(Max)'], valores_Corchetes=['UTC', '%'])
+                    df_Tabla_Armonicos_Distorsion_Tension = filtrar_DataFrame_Columnas(dataFrame=df, nombres_Fijos_Columnas=['Hora', 'U1 a3(Max)', 'U1 a5(Max)', 'U1 a7(Max)', 'U1 a9(Max)', 'U1 a11(Max)', 'U1 a13(Max)', 'U1 a15(Max)', 'U2 a3(Max)', 'U2 a5(Max)', 'U2 a7(Max)', 'U2 a9(Max)', 'U2 a11(Max)', 'U2 a13(Max)', 'U2 a15(Max)'], valores_Corchetes=['UTC', '%'])
 
                     df_Tabla_Distorsion_Corriente = filtrar_DataFrame_Columnas(dataFrame=df, nombres_Fijos_Columnas=['Hora', 'THD I1(Max)', 'THD I2(Max)'], valores_Corchetes=['UTC', '%'])
 
@@ -699,7 +705,7 @@ if 'correo_electronico' in st.session_state:
                     #print(df_Tabla_Calculos_FactorPotenciaGeneral)
                     #print("******"*50)
 
-                    df_Tabla_Calculos_DistTension = crear_Medidas_DataFrame_Distorsion_Tension(dataFrame=df_Tabla_Distorsion_TensionFinal, listado_Columnas_a_Medir=obtener_Columnas_DataFrame(dataFrame=df_Tabla_Distorsion_TensionFinal, nombres_Fijos_Columnas=['THD U12(Max)', 'THD U23(Max)'], valores_Corchetes=['%']))
+                    df_Tabla_Calculos_DistTension = crear_Medidas_DataFrame_Distorsion_Tension(dataFrame=df_Tabla_Distorsion_TensionFinal, listado_Columnas_a_Medir=obtener_Columnas_DataFrame(dataFrame=df_Tabla_Distorsion_TensionFinal, nombres_Fijos_Columnas=['THD U1(Max)', 'THD U2(Max)'], valores_Corchetes=['%']))
 
                     st.markdown("""
                     > ## Medidas - DataFrame Distorsión de Tensión
@@ -708,7 +714,7 @@ if 'correo_electronico' in st.session_state:
                     st.dataframe(df_Tabla_Calculos_DistTension)
                     #print("******"*50)
 
-                    df_Tabla_Calculos_Armonicos_DistTension = crear_Medidas_DataFrame_Armonicos_DistTension(dataFrame=df_Tabla_Armonicos_Distorsion_Tension_Final, listado_Columnas_a_Medir=obtener_Columnas_DataFrame(dataFrame=df_Tabla_Armonicos_Distorsion_Tension_Final, nombres_Fijos_Columnas=['U12 a3(Max)', 'U12 a5(Max)', 'U12 a7(Max)', 'U12 a9(Max)', 'U12 a11(Max)', 'U12 a13(Max)', 'U12 a15(Max)', 'U23 a3(Max)', 'U23 a5(Max)', 'U23 a7(Max)', 'U23 a9(Max)', 'U23 a11(Max)', 'U23 a13(Max)', 'U23 a15(Max)'], valores_Corchetes=['%']))
+                    df_Tabla_Calculos_Armonicos_DistTension = crear_Medidas_DataFrame_Armonicos_DistTension(dataFrame=df_Tabla_Armonicos_Distorsion_Tension_Final, listado_Columnas_a_Medir=obtener_Columnas_DataFrame(dataFrame=df_Tabla_Armonicos_Distorsion_Tension_Final, nombres_Fijos_Columnas=['U1 a3(Max)', 'U1 a5(Max)', 'U1 a7(Max)', 'U1 a9(Max)', 'U1 a11(Max)', 'U1 a13(Max)', 'U1 a15(Max)', 'U2 a3(Max)', 'U2 a5(Max)', 'U2 a7(Max)', 'U2 a9(Max)', 'U2 a11(Max)', 'U2 a13(Max)', 'U2 a15(Max)'], valores_Corchetes=['%']))
 
                     st.markdown("""
                     > ## Medidas - DataFrame Armónicos de Distorsión de Tensión
@@ -999,7 +1005,7 @@ if 'correo_electronico' in st.session_state:
 
                     print(data_Percentiles_Energia)
                     
-                    listado_Columnas_PR_DistorsionTension: list = obtener_Columnas_DataFrame(dataFrame=df, nombres_Fijos_Columnas=['THD U12(Max)', 'THD U23(Max)'], valores_Corchetes=['%'])
+                    listado_Columnas_PR_DistorsionTension: list = obtener_Columnas_DataFrame(dataFrame=df, nombres_Fijos_Columnas=['THD U1(Max)', 'THD U2(Max)'], valores_Corchetes=['%'])
 
                     print(f"Columnas PR - Distorsión de Tensión {listado_Columnas_PR_DistorsionTension}")
 
@@ -1224,7 +1230,7 @@ if 'correo_electronico' in st.session_state:
 
                     print("******"*50)
 
-                    listado_Columnas_Percentiles_DistorsionTension: list = obtener_Columnas_DataFrame(dataFrame=df_Tabla_Distorsion_TensionFinal, nombres_Fijos_Columnas=['THD U12(Max)', 'THD U23(Max)'], valores_Corchetes=['%'])
+                    listado_Columnas_Percentiles_DistorsionTension: list = obtener_Columnas_DataFrame(dataFrame=df_Tabla_Distorsion_TensionFinal, nombres_Fijos_Columnas=['THD U1(Max)', 'THD U2(Max)'], valores_Corchetes=['%'])
 
                     print(f'Listado de Columnas de Distorsión de Tensión para Percentiles {listado_Columnas_Percentiles_DistorsionTension}')
 
@@ -1328,7 +1334,7 @@ if 'correo_electronico' in st.session_state:
                     print(f"Listado de Columnas de Energías Generadas: {list_Columns_Graficos_Consolidado_Energia_Generada}")
 
                     # Aquí tenemos una lista de las columnas que se van a graficar a través del tiempo para el Análisis de Distorsión de Tensión
-                    list_Columns_Distorsion_Tension: list = obtener_Columnas_DataFrame(dataFrame=df_Tabla_Distorsion_TensionFinal, nombres_Fijos_Columnas=['THD U12(Max)', 'THD U23(Max)'], valores_Corchetes=['%'])
+                    list_Columns_Distorsion_Tension: list = obtener_Columnas_DataFrame(dataFrame=df_Tabla_Distorsion_TensionFinal, nombres_Fijos_Columnas=['THD U1(Max)', 'THD U2(Max)'], valores_Corchetes=['%'])
                     print(f"Listado de Columnas Distorsión de Tensión: {list_Columns_Distorsion_Tension}")
 
                     # Aquí tenemos una lista de las columnas que se van a graficar a través del tiempo para el Análisis de Distorsión de Corriente
@@ -1447,15 +1453,15 @@ if 'correo_electronico' in st.session_state:
                     print(f"Listado de Columnas del Registro de Energías de Word: {listado_Registro_Energias}")
                     print("******"*50)
 
-                    listado_Registro_THDV: list = obtener_Columnas_DataFrame(dataFrame=df_Tabla_Distorsion_TensionFinal, nombres_Fijos_Columnas=['THD U12(Max)', 'THD U23(Max)'], valores_Corchetes=['%'])
+                    listado_Registro_THDV: list = obtener_Columnas_DataFrame(dataFrame=df_Tabla_Distorsion_TensionFinal, nombres_Fijos_Columnas=['THD U1(Max)', 'THD U2(Max)'], valores_Corchetes=['%'])
                     print(f"Listado de Columnas del Registro de THDV de Word: {listado_Registro_THDV}")
                     print("******"*50)
 
-                    listado_Registro_Armonicos_Tension_L1: list = obtener_Columnas_DataFrame(dataFrame=df, nombres_Fijos_Columnas=['U12 a3(Max)', 'U12 a5(Max)', 'U12 a7(Max)', 'U12 a9(Max)', 'U12 a11(Max)', 'U12 a13(Max)', 'U12 a15(Max)'], valores_Corchetes=['%'])
+                    listado_Registro_Armonicos_Tension_L1: list = obtener_Columnas_DataFrame(dataFrame=df, nombres_Fijos_Columnas=['U1 a3(Max)', 'U1 a5(Max)', 'U1 a7(Max)', 'U1 a9(Max)', 'U1 a11(Max)', 'U1 a13(Max)', 'U1 a15(Max)'], valores_Corchetes=['%'])
                     print(f"Listado de Columnas del Registro de Armónicos de Tensión (L1) de Word: {listado_Registro_Armonicos_Tension_L1}")
                     print("******"*50)
 
-                    listado_Registro_Armonicos_Tension_L2: list = obtener_Columnas_DataFrame(dataFrame=df, nombres_Fijos_Columnas=['U23 a3(Max)', 'U23 a5(Max)', 'U23 a7(Max)', 'U23 a9(Max)', 'U23 a11(Max)', 'U23 a13(Max)', 'U23 a15(Max)'], valores_Corchetes=['%'])
+                    listado_Registro_Armonicos_Tension_L2: list = obtener_Columnas_DataFrame(dataFrame=df, nombres_Fijos_Columnas=['U2 a3(Max)', 'U2 a5(Max)', 'U2 a7(Max)', 'U2 a9(Max)', 'U2 a11(Max)', 'U2 a13(Max)', 'U2 a15(Max)'], valores_Corchetes=['%'])
                     print(f"Listado de Columnas del Registro de Armónicos de Tensión (L2) de Word: {listado_Registro_Armonicos_Tension_L2}")
                     print("******"*50)
 

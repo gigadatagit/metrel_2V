@@ -91,7 +91,7 @@ def enviar_codigo_mailjet(destinatario, nombre_destinatario, codigo_verificacion
       'Messages': [ 
                     { 
                         "From": { 
-                            "Email": "jvergara@gigaelectro.co", 
+                            "Email": "auth_giga@datamorphos.com.co", 
                             "Name": "Autenticacion GIGA" 
                         }, 
                         "To": [ 
