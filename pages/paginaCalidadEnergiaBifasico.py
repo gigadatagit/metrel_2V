@@ -43,7 +43,7 @@ if 'correo_electronico' in st.session_state:
                 
             except Exception:
                 
-                print("No se encontraron las columnas a eliminar, por lo que no se realizó la eliminación de columnas.")
+                print("No se encontraron las columnas, por lo que no se realizó la eliminación de columnas.")
             
             mapeo_renombre_columnas = {
                 'EQfund1cap+(Med) [kvarh]': 'EQfund1cap+(Med) [varh]',
