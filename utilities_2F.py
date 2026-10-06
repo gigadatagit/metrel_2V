@@ -219,7 +219,7 @@ def convertir_Unidades(dataFrame: pd.DataFrame, columnas_DataFrame: list, unidad
         #return finalDataFrame  # Se podría implementar un bucle para solicitar nuevamente
 
     # Si la unidad es igual al primer elemento de las Unidades Válidas, se realiza la conversión dividiendo entre 1000
-    if unidad_Elegida == valid_Units[0]:
+    if unidad_Elegida == valid_Units[1]:
         for col in columnas_DataFrame:
             if col in finalDataFrame.columns:
                 finalDataFrame[col] = finalDataFrame[col] / 1000  # Conversión de valid_Units[0] a valid_Units[1]
@@ -227,7 +227,7 @@ def convertir_Unidades(dataFrame: pd.DataFrame, columnas_DataFrame: list, unidad
             else:
                 print(f"La columna '{col}' no existe en el DataFrame.")
     else:
-        print(f"La unidad ingresada es {valid_Units[1]}. No se requiere conversión.")
+        print(f"La unidad ingresada es {valid_Units[0]}. No se requiere conversión.")
 
     return finalDataFrame
 

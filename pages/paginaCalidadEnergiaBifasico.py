@@ -34,16 +34,16 @@ if 'correo_electronico' in st.session_state:
             
             #columns_to_drop = [col for col in df.columns if 'U12' in col]
             
-            columns_to_drop = ['U12(Min) [V]', 'U12(Max) [V]', 'U12(Med) [V]']
+            #columns_to_drop = ['U12(Min) [V]', 'U12(Max) [V]', 'U12(Med) [V]']
 
-            try: 
+            #try: 
 
                 # Drop the identified columns
-                df = df.drop(columns=columns_to_drop)
+                #df = df.drop(columns=columns_to_drop)
                 
-            except Exception:
+            #except Exception:
                 
-                print("No se encontraron las columnas a eliminar, por lo que no se realizó la eliminación de columnas.")
+                #print("No se encontraron las columnas a eliminar, por lo que no se realizó la eliminación de columnas.")
             
             mapeo_renombre_columnas = {
                 'EQfund1cap+(Med) [kvarh]': 'EQfund1cap+(Med) [varh]',
@@ -185,7 +185,11 @@ if 'correo_electronico' in st.session_state:
                     var_Limite_Inferior_Tension = calcular_Valor_Tension_Nominal(var1)[0]
                     var_Limite_Superior_Tension = calcular_Valor_Tension_Nominal(var1)[1]
                     
+                    var_Limite_Inferior_Tension_FaseFase = calcular_Valor_Tension_Nominal(var_Calculo_Inominal)[0]
+                    var_Limite_Superior_Tension_FaseFase = calcular_Valor_Tension_Nominal(var_Calculo_Inominal)[1]
+                    
                     print(f"Limites de Tensión - Inferior ({var_Limite_Inferior_Tension}) y Superior({var_Limite_Superior_Tension})")
+                    print(f"Limites de Tensión Fase-Fase - Inferior ({var_Limite_Inferior_Tension_FaseFase}) y Superior({var_Limite_Superior_Tension_FaseFase})")
 
                     var_Corriente_Nominal_Value = calcular_Valor_Corriente_Nominal((var2 * 1000), var_Calculo_Inominal)
                     
@@ -215,6 +219,13 @@ if 'correo_electronico' in st.session_state:
                     df_Cambios_Tension = convertir_Unidades(dataFrame=df, columnas_DataFrame=columnas_Tension_Unidades, unidad_Elegida=unidadMedidaVoltaje, unidades_Validas=['mV', 'V'])
                     
                     #st.dataframe(df_Cambios_Tension.head(5))
+                    
+                    # Lista de columnas de Tensión Fase - Fase a convertir
+                    
+                    columnas_Tension_FaseFase_Unidades = obtener_Columnas_DataFrame(dataFrame=df, nombres_Fijos_Columnas=['U12(Min)', 'U12(Med)', 'U12(Max)'], valores_Corchetes=['V'])
+                    
+                    # Llamada a la función
+                    df_Cambios_Tension_FaseFase = convertir_Unidades(dataFrame=df_Cambios_Tension, columnas_DataFrame=columnas_Tension_FaseFase_Unidades, unidad_Elegida=unidadMedidaVoltaje, unidades_Validas=['mV', 'V'])
                     
 
                     # Lista de columnas de Corriente a convertir
@@ -367,7 +378,9 @@ if 'correo_electronico' in st.session_state:
 
                             #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/0c25e2bcd5194ec1a9153caebb8c8044ff890094/plantilla_Word_VATIA_Generada.docx?raw=true"
                             
-                            var_Enlace_Plantilla = "templates/plantilla_Word_VATIA_Generada.docx"
+                            #var_Enlace_Plantilla = "templates/plantilla_Word_VATIA_Generada.docx"
+                            
+                            var_Enlace_Plantilla = "templates/plantilla_Word_VATIA_Generada_Bifasico.docx"
                             
                             pass
                             
@@ -375,7 +388,9 @@ if 'correo_electronico' in st.session_state:
                             
                             #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/2e357b0eac909fa63b7dbff2c4c5db497c3bd3fe/plantilla_Word_ERCO_Generada.docx?raw=true"
                             
-                            var_Enlace_Plantilla = "templates/plantilla_Word_ERCO_Generada.docx"
+                            #var_Enlace_Plantilla = "templates/plantilla_Word_ERCO_Generada.docx"
+                            
+                            var_Enlace_Plantilla = "templates/plantilla_Word_ERCO_Generada_Bifasico.docx"
                             
                             pass
                             
@@ -395,7 +410,9 @@ if 'correo_electronico' in st.session_state:
 
                             #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/88c3e251be32ccc36b4ff2e152107a4e94fa1c47/plantilla_Word_VATIA_NoGenerada.docx?raw=true"
                             
-                            var_Enlace_Plantilla = "templates/plantilla_Word_VATIA_NoGenerada.docx"
+                            #var_Enlace_Plantilla = "templates/plantilla_Word_VATIA_NoGenerada.docx"
+                            
+                            var_Enlace_Plantilla = "templates/plantilla_Word_VATIA_NoGenerada_Bifasico.docx"
                             
                             pass
                             
@@ -403,7 +420,9 @@ if 'correo_electronico' in st.session_state:
                             
                             #var_Enlace_Plantilla = "https://github.com/gigadatagit/GIGA_Data/blob/2e357b0eac909fa63b7dbff2c4c5db497c3bd3fe/plantilla_Word_ERCO_NoGenerada.docx?raw=true"
                             
-                            var_Enlace_Plantilla = "templates/plantilla_Word_ERCO_NoGenerada.docx"
+                            #var_Enlace_Plantilla = "templates/plantilla_Word_ERCO_NoGenerada.docx"
+                            
+                            var_Enlace_Plantilla = "templates/plantilla_Word_ERCO_NoGenerada_Bifasico.docx"
                             
                             pass
                             
@@ -438,6 +457,11 @@ if 'correo_electronico' in st.session_state:
 
                     # Aquí tenemos una lista de las columnas que se van a graficar a través del tiempo para el Desbalance de Tensión
                     list_Columns_Grafico_DesbTension: list = ['Desbalance']
+                    
+                    # Aquí tenemos una lista de las columnas que se van a graficar a través del tiempo para la tensión fase-fase
+                    list_Columns_Grafico_Tension_FaseFase: list = obtener_Columnas_DataFrame(dataFrame=df, nombres_Fijos_Columnas=['U12(Med)'], valores_Corchetes=['V'])
+
+                    
 
                     # Aquí tenemos una lista de las columnas que se van a graficar a través del tiempo para la corriente
                     list_Columns_Grafico_Corriente: list = obtener_Columnas_DataFrame(dataFrame=df, nombres_Fijos_Columnas=['I1(Max)', 'I2(Max)', 'IN(Med)'], valores_Corchetes=['A'])
@@ -451,6 +475,8 @@ if 'correo_electronico' in st.session_state:
                     # Declaración de todos los DataFrames filtrando por las columnas que se van a Utilizar para generar el Documento y Realizar los Cálculos o Gráficos
 
                     df_Tabla_Tension = filtrar_DataFrame_Columnas(dataFrame=df, nombres_Fijos_Columnas=['Hora', 'U1(Min)', 'U1(Med)', 'U1(Max)', 'U2(Min)', 'U2(Med)', 'U2(Max)'], valores_Corchetes=['UTC', 'V'])
+                    
+                    df_Tabla_Tension_FaseFase = filtrar_DataFrame_Columnas(dataFrame=df, nombres_Fijos_Columnas=['Hora', 'U12(Min)', 'U12(Med)', 'U12(Max)'], valores_Corchetes=['UTC', 'V'])
 
                     df_Tabla_Corriente = filtrar_DataFrame_Columnas(dataFrame=df, nombres_Fijos_Columnas=['Hora', 'I1(Min)', 'I1(Med)', 'I1(Max)', 'I2(Min)', 'I2(Med)', 'I2(Max)', 'IN(Min)', 'IN(Med)', 'IN(Max)'], valores_Corchetes=['UTC', 'A'])
 
@@ -492,6 +518,16 @@ if 'correo_electronico' in st.session_state:
 
                     st.dataframe(df_Tabla_Tension_Final.head(5))
                     #print("******"*50)
+                    
+                    
+                    df_Tabla_Tension_FaseFase_Final = crear_DataFrame_Tension(dataFrame=df_Tabla_Tension_FaseFase, var_Lim_Inf_Ten=var_Limite_Inferior_Tension_FaseFase, val_Nom=var_Calculo_Inominal, var_Lim_Sup_Ten=var_Limite_Superior_Tension_FaseFase)
+                    
+                    st.markdown("""
+                    > ## Cabecera - DataFrame de Tensión Fase-Fase Final            
+                    """)
+                    
+                    st.dataframe(df_Tabla_Tension_FaseFase_Final.head(5))
+                    
 
                     df_Tabla_Desb_Tension = crear_DataFrame_Desbalance_Tension(dataFrame=df_Tabla_Desbalance_Tension, val_Desb_Ten=var3, nombres_Fijos_Columnas=['U1(Med)', 'U2(Med)'], valores_Corchetes=['V'])
 
@@ -645,6 +681,14 @@ if 'correo_electronico' in st.session_state:
 
                     st.dataframe(df_Tabla_Calculos_Tension)
                     #print("******"*50)
+                    
+                    df_Tabla_Calculos_Tension_FaseFase = crear_Medidas_DataFrame_Tension(dataFrame=df_Tabla_Tension_FaseFase_Final, listado_Columnas_a_Medir=obtener_Columnas_DataFrame(dataFrame=df_Tabla_Tension_FaseFase_Final, nombres_Fijos_Columnas=['U12(Min)', 'U12(Med)', 'U12(Max)'], valores_Corchetes=['V']))
+                    
+                    st.markdown("""
+                    > ## Medidas - DataFrame Tensión Fase-Fase            
+                    """)
+                    
+                    st.dataframe(df_Tabla_Calculos_Tension_FaseFase)
 
                     df_Tabla_Calculos_Desb_Tension = crear_Medidas_DataFrame_DesbTension(dataFrame=df_Tabla_Desb_Tension, listado_Columnas_a_Medir=obtener_Columnas_DataFrame(dataFrame=df_Tabla_Desb_Tension, nombres_Fijos_Columnas=['U1(Med)', 'U2(Med)'], valores_Corchetes=['V']))
 
@@ -884,6 +928,16 @@ if 'correo_electronico' in st.session_state:
                     }
 
                     print(data_Percentiles_Tension)
+                    
+                    # En este lugar declaramos diccionarios con los percentiles para utilizarlos luego en gráficos o en otras partes del código
+                    
+                    listado_Columnas_PR_Tension_FaseFase: list = obtener_Columnas_DataFrame(dataFrame=df, nombres_Fijos_Columnas=['U12(Med)'], valores_Corchetes=['V'])
+                    
+                    print(f"Columnas PR - Tension Fase Fase {listado_Columnas_PR_Tension_FaseFase}")
+                    
+                    data_Percentiles_Tension_FaseFase: dict = {
+                        'PERCENTIL_TENSIN_FF_L12': round(df_Tabla_Calculos_Tension_FaseFase[listado_Columnas_PR_Tension_FaseFase[0]].iloc[0], 2)
+                    }
 
                     print("******"*50)
 
@@ -1081,6 +1135,8 @@ if 'correo_electronico' in st.session_state:
                     # Creamos una copia de cada uno de los DataFrames Finales
 
                     df_Tabla_Tension_Copy = df_Tabla_Tension_Final.copy()
+                    
+                    df_Tabla_Tension_FaseFase_Copy = df_Tabla_Tension_FaseFase_Final.copy()
 
                     df_Tabla_Desb_Tension_Copy = df_Tabla_Desb_Tension.copy()
 
@@ -1111,7 +1167,7 @@ if 'correo_electronico' in st.session_state:
                     #df_Tabla_Energias_Generadas_Copy = df_Energia_Generada.copy()
 
                     # Lista de DataFrames a combinar
-                    listado_DataFrames: list = [df_Tabla_Tension_Copy, df_Tabla_Desb_Tension_Copy, df_Tabla_Corriente_Copy, df_Tabla_Desb_Corriente_Copy, df_Tabla_PQS_Final_Copy, df_Tabla_FactPotenciaFinal_Copy, df_Tabla_Distorsion_TensionFinal_Copy, df_Tabla_Armonicos_Distorsion_Tension_Final_Copy, df_Tabla_Distorsion_CorrienteFinal_Copy, df_Tabla_Armonicos_Distorsion_Corriente_Final_Copy, df_Tabla_Armonicos_Cargabilidad_TDDFinal_Copy, df_Tabla_FlickerFinal_Copy, df_Tabla_FactorKFinal_Copy, df_Tabla_Energias_Copy]
+                    listado_DataFrames: list = [df_Tabla_Tension_Copy, df_Tabla_Tension_FaseFase_Copy, df_Tabla_Desb_Tension_Copy, df_Tabla_Corriente_Copy, df_Tabla_Desb_Corriente_Copy, df_Tabla_PQS_Final_Copy, df_Tabla_FactPotenciaFinal_Copy, df_Tabla_Distorsion_TensionFinal_Copy, df_Tabla_Armonicos_Distorsion_Tension_Final_Copy, df_Tabla_Distorsion_CorrienteFinal_Copy, df_Tabla_Armonicos_Distorsion_Corriente_Final_Copy, df_Tabla_Armonicos_Cargabilidad_TDDFinal_Copy, df_Tabla_FlickerFinal_Copy, df_Tabla_FactorKFinal_Copy, df_Tabla_Energias_Copy]
 
                     print("Generando Excel con la Información de todas las columnas analizadas.")
                     
@@ -1149,6 +1205,17 @@ if 'correo_electronico' in st.session_state:
                     print(f'Listado de Columnas - Variaciones {listado_Variaciones_Tension_Minima_y_Maxima}')
 
                     var_Lista_Variaciones = calcular_Variacion_Tension(lista_Percentiles=[df_Tabla_Calculos_Tension[listado_Variaciones_Tension_Minima_y_Maxima[0]].iloc[0], df_Tabla_Calculos_Tension[listado_Variaciones_Tension_Minima_y_Maxima[2]].iloc[0], df_Tabla_Calculos_Tension[listado_Variaciones_Tension_Minima_y_Maxima[1]].iloc[0], df_Tabla_Calculos_Tension[listado_Variaciones_Tension_Minima_y_Maxima[3]].iloc[0]], val_Nom=var1)
+                    
+                    
+                    # Aquí hay una lista que almacena cada uno de los valores de la Variación para cada Percentil de las Tensiones Fase Fase
+                    
+                    listado_Variaciones_Tension_FaseFase_Minima_y_Maxima: list = obtener_Columnas_DataFrame(dataFrame=df_Tabla_Tension_FaseFase_Final, nombres_Fijos_Columnas=['U12(Min)', 'U12(Max)'], valores_Corchetes=['V'])
+                    
+                    print(f'Listado de Columnas - Variaciones Fase Fase {listado_Variaciones_Tension_FaseFase_Minima_y_Maxima}')
+                    
+                    var_Lista_Variaciones_FaseFase = calcular_Variacion_Tension(lista_Percentiles=[df_Tabla_Calculos_Tension_FaseFase[listado_Variaciones_Tension_FaseFase_Minima_y_Maxima[0]].iloc[0], df_Tabla_Calculos_Tension_FaseFase[listado_Variaciones_Tension_FaseFase_Minima_y_Maxima[1]].iloc[0]], val_Nom=var_Calculo_Inominal)   
+
+
 
                     listado_PQS_Maxima_Aparente: list = obtener_Columnas_DataFrame(dataFrame=df, nombres_Fijos_Columnas=['Setot+(Max)'], valores_Corchetes=['VA'])
 
@@ -1157,6 +1224,8 @@ if 'correo_electronico' in st.session_state:
                     var_Lista_PQS_Carg_Disp = [calcular_Valor_Cargabilidad_Disponibilidad(var2, df_Tabla_Calculos_PQS_Potencias[listado_PQS_Maxima_Aparente[0]].iloc[0])[0], calcular_Valor_Cargabilidad_Disponibilidad(var2, df_Tabla_Calculos_PQS_Potencias[listado_PQS_Maxima_Aparente[0]].iloc[0])[1]]
 
                     print(f"Listado de Variaciones: {var_Lista_Variaciones}")
+                    
+                    print(f"Listado de Variaciones Fase Fase: {var_Lista_Variaciones_FaseFase}")
 
                     print(f'Listado de Cargabilidad Disponible: {var_Lista_PQS_Carg_Disp}')
 
@@ -1358,6 +1427,10 @@ if 'correo_electronico' in st.session_state:
                     # Buffer de la Imagen para la Línea de Tiempo de la Tensión (Aquí se almacena el gráfico en la memoria local)
                     img_buffer_Timeline_Tension = graficar_Timeline_Tension(df_Tabla_Tension_Final, list_Columns_Grafico_Tension, data_Percentiles_Tension, 'Hora [UTC]', limites=[df_Tabla_Tension_Final['var_Limite_Inferior_Tension'].iloc[0], df_Tabla_Tension_Final['var_Limite_Superior_Tension'].iloc[0]], titulo='REGISTROS DE TENSIÓN')
                     print("******"*50)
+                    
+                    # Buffer de la Imagen para la Línea de Tiempo de la Tensión Fase-Fase (Aquí se almacena el gráfico en la memoria local)
+                    img_buffer_Timeline_Tension_FaseFase = graficar_Timeline_Tension(df_Tabla_Tension_FaseFase_Final, list_Columns_Grafico_Tension_FaseFase, data_Percentiles_Tension_FaseFase, 'Hora [UTC]', limites=[df_Tabla_Tension_FaseFase_Final['var_Limite_Inferior_Tension'].iloc[0], df_Tabla_Tension_FaseFase_Final['var_Limite_Superior_Tension'].iloc[0]], titulo='REGISTROS DE TENSIÓN FASE-FASE')
+                    print("******"*50)
 
                     # Buffer de la Imagen para la Línea de Tiempo de la Corriente (Aquí se almacena el gráfico en la memoria local)
                     img_buffer_Timeline_Corriente = graficar_Timeline_Corriente(df_Tabla_Corriente_Final, list_Columns_Grafico_Corriente, data_Percentiles_Corriente, 'Hora [UTC]', limite=df_Tabla_Corriente_Final['var_Limite_Corriente_Nominal'].iloc[0], titulo='REGISTROS DE CORRIENTE')
@@ -1411,6 +1484,7 @@ if 'correo_electronico' in st.session_state:
 
                     # Agregar datos y el gráfico al contexto
                     img_Timeline_Tension = InlineImage(doc, img_buffer_Timeline_Tension, Cm(18))
+                    img_Timeline_Tension_FaseFase = InlineImage(doc, img_buffer_Timeline_Tension_FaseFase, Cm(18))
                     img_Timeline_Corriente = InlineImage(doc, img_buffer_Timeline_Corriente, Cm(18))
                     img_Timeline_DesbTension = InlineImage(doc, img_buffer_Timeline_DesbTension, Cm(18))
                     img_Timeline_DesbCorriente = InlineImage(doc, img_buffer_Timeline_DesbCorriente, Cm(18))
@@ -1431,7 +1505,11 @@ if 'correo_electronico' in st.session_state:
                     listado_Registro_Tension: list = obtener_Columnas_DataFrame(dataFrame=df, nombres_Fijos_Columnas=['U1(Min)', 'U1(Med)', 'U1(Max)', 'U2(Min)', 'U2(Med)', 'U2(Max)'], valores_Corchetes=['V'])
                     print(f"Listado de Columnas del Registro de Tensión de Word: {listado_Registro_Tension}")
                     print("******"*50)
-
+                    
+                    listado_Registro_Tension_FaseFase: list = obtener_Columnas_DataFrame(dataFrame=df, nombres_Fijos_Columnas=['U12(Min)', 'U12(Med)', 'U12(Max)'], valores_Corchetes=['V'])
+                    print(f"Listado de Columnas del Registro de Tensión Fase-Fase de Word: {listado_Registro_Tension_FaseFase}")
+                    print("******"*50)
+                    
                     listado_Registro_Corriente: list = obtener_Columnas_DataFrame(dataFrame=df, nombres_Fijos_Columnas=['I1(Min)', 'I1(Med)', 'I1(Max)', 'I2(Min)', 'I2(Med)', 'I2(Max)', 'I3(Min)', 'I3(Med)', 'I3(Max)', 'IN(Min)', 'IN(Med)', 'IN(Max)'], valores_Corchetes=['A'])
                     print(f"Listado de Columnas del Registro de Corriente de Word: {listado_Registro_Corriente}")
                     print("******"*50)
@@ -1524,8 +1602,11 @@ if 'correo_electronico' in st.session_state:
                                     
                                     registro = {
                                         'var_Lim_Inf_Tension': round(var_Limite_Inferior_Tension, 2),
+                                        'var_Lim_Inf_Tension_FaseFase': round(var_Limite_Inferior_Tension_FaseFase, 2),
                                         'var_Nominal_Value': round(var1, 2),
+                                        'var_Nominal_Value_FaseFase': round(var_Calculo_Inominal, 2),
                                         'var_Lim_Sup_Tension': round(var_Limite_Superior_Tension, 2),
+                                        'var_Lim_Sup_Tension_FaseFase': round(var_Limite_Superior_Tension_FaseFase, 2),
                                         'var_Cap_Trafo': round(var2, 2),
                                         'var_Corr_Nominal_Value': round(var_Corriente_Nominal_Value, 2),
                                         'nombreCompleto': str(nombreCompleto).upper(),
@@ -1542,6 +1623,7 @@ if 'correo_electronico' in st.session_state:
                                         'anio': str(anio).upper(),
                                         'imgMapsProyecto': imgMapsProyecto,
                                         'imagen_Linea_Tiempo_Tension': img_Timeline_Tension,
+                                        'imagen_Linea_Tiempo_Tension_FaseFase': img_Timeline_Tension_FaseFase,
                                         'imagen_Linea_Tiempo_Corriente': img_Timeline_Corriente,
                                         'imagen_Linea_Tiempo_DesbTension': img_Timeline_DesbTension,
                                         'imagen_Linea_Tiempo_DesbCorriente': img_Timeline_DesbCorriente,
@@ -1567,6 +1649,10 @@ if 'correo_electronico' in st.session_state:
                                         #'L31_MIN_PR': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[6]].iloc[0], 2),
                                         #'L31_MED_PR': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[8]].iloc[0], 2),
                                         #'L31_MAX_PR': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[7]].iloc[0], 2),
+                                        'LFF12_MIN_PR': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[0]].iloc[0], 2),
+                                        'LFF12_MED_PR': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[2]].iloc[0], 2),
+                                        'LFF12_MAX_PR': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[1]].iloc[0], 2),
+                                        # Separador
                                         'L1_CORR_MIN_PR': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[0]].iloc[0], 2),
                                         'L1_CORR_MED_PR': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[2]].iloc[0], 2),
                                         'L1_CORR_MAX_PR': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[1]].iloc[0], 2),
@@ -1588,6 +1674,10 @@ if 'correo_electronico' in st.session_state:
                                         #'L31_MIN_MX': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[6]].iloc[3], 2),
                                         #'L31_MED_MX': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[8]].iloc[3], 2),
                                         #'L31_MAX_MX': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[7]].iloc[3], 2),
+                                        'LFF12_MIN_MX': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[0]].iloc[3], 2),
+                                        'LFF12_MED_MX': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[2]].iloc[3], 2),
+                                        'LFF12_MAX_MX': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[1]].iloc[3], 2),
+                                        # Separador
                                         'L1_CORR_MIN_MX': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[0]].iloc[3], 2),
                                         'L1_CORR_MED_MX': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[2]].iloc[3], 2),
                                         'L1_CORR_MAX_MX': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[1]].iloc[3], 2),
@@ -1609,6 +1699,10 @@ if 'correo_electronico' in st.session_state:
                                         #'L31_MIN_PM': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[6]].iloc[1], 2),
                                         #'L31_MED_PM': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[8]].iloc[1], 2),
                                         #'L31_MAX_PM': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[7]].iloc[1], 2),
+                                        'LFF12_MIN_PM': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[0]].iloc[1], 2),
+                                        'LFF12_MED_PM': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[2]].iloc[1], 2),
+                                        'LFF12_MAX_PM': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[1]].iloc[1], 2),
+                                        # Separador
                                         'L1_CORR_MIN_PM': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[0]].iloc[1], 2),
                                         'L1_CORR_MED_PM': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[2]].iloc[1], 2),
                                         'L1_CORR_MAX_PM': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[1]].iloc[1], 2),
@@ -1630,6 +1724,10 @@ if 'correo_electronico' in st.session_state:
                                         #'L31_MIN_MN': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[6]].iloc[2], 2),
                                         #'L31_MED_MN': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[8]].iloc[2], 2),
                                         #'L31_MAX_MN': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[7]].iloc[2], 2),
+                                        'LFF12_MIN_MN': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[0]].iloc[2], 2),
+                                        'LFF12_MED_MN': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[2]].iloc[2], 2),
+                                        'LFF12_MAX_MN': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[1]].iloc[2], 2),
+                                        # Separador
                                         'L1_CORR_MIN_MN': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[0]].iloc[2], 2),
                                         'L1_CORR_MED_MN': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[2]].iloc[2], 2),
                                         'L1_CORR_MAX_MN': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[1]].iloc[2], 2),
@@ -1644,10 +1742,14 @@ if 'correo_electronico' in st.session_state:
                                         'LN_CORR_MAX_MN': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[10]].iloc[2], 2),
                                         'val_Pct_Max_VL1': round(var_Lista_Variaciones[3], 2),
                                         'val_Pct_Max_VL2': round(var_Lista_Variaciones[4], 2),
-                                        'val_Pct_Max_VL3': round(var_Lista_Variaciones[5], 2),
+                                        #'val_Pct_Max_VL3': round(var_Lista_Variaciones[5], 2),
                                         'val_Pct_Min_VL1': round(var_Lista_Variaciones[0], 2),
                                         'val_Pct_Min_VL2': round(var_Lista_Variaciones[1], 2),
-                                        'val_Pct_Min_VL3': round(var_Lista_Variaciones[2], 2),
+                                        #'val_Pct_Min_VL3': round(var_Lista_Variaciones[2], 2),
+                                        # Separador
+                                        'val_Pct_Max_VL12_FF': round(var_Lista_Variaciones_FaseFase[1], 2),
+                                        'val_Pct_Min_VL12_FF': round(var_Lista_Variaciones_FaseFase[0], 2),
+                                        # Separador
                                         'V1_DESBTEN_MED_PR': round(df_Tabla_Calculos_Desb_Tension[listado_Registro_Tension[2]].iloc[0], 2),
                                         'V2_DESBTEN_MED_PR': round(df_Tabla_Calculos_Desb_Tension[listado_Registro_Tension[5]].iloc[0], 2),
                                         'V3_DESBTEN_MED_PR': round(df_Tabla_Calculos_Desb_Tension[listado_Registro_Tension[8]].iloc[0], 2),
@@ -2139,8 +2241,11 @@ if 'correo_electronico' in st.session_state:
                                     
                                     registro = {
                                         'var_Lim_Inf_Tension': round(var_Limite_Inferior_Tension, 2),
+                                        'var_Lim_Inf_Tension_FaseFase': round(var_Limite_Inferior_Tension_FaseFase, 2),
                                         'var_Nominal_Value': round(var1, 2),
+                                        'var_Nominal_Value_FaseFase': round(var_Calculo_Inominal, 2),
                                         'var_Lim_Sup_Tension': round(var_Limite_Superior_Tension, 2),
+                                        'var_Lim_Sup_Tension_FaseFase': round(var_Limite_Superior_Tension_FaseFase, 2),
                                         'var_Cap_Trafo': round(var2, 2),
                                         'var_Corr_Nominal_Value': round(var_Corriente_Nominal_Value, 2),
                                         'nombreCompleto': str(nombreCompleto).upper(),
@@ -2157,6 +2262,7 @@ if 'correo_electronico' in st.session_state:
                                         'anio': str(anio).upper(),
                                         'imgMapsProyecto': imgMapsProyecto,
                                         'imagen_Linea_Tiempo_Tension': img_Timeline_Tension,
+                                        'imagen_Linea_Tiempo_Tension_FaseFase': img_Timeline_Tension_FaseFase,
                                         'imagen_Linea_Tiempo_Corriente': img_Timeline_Corriente,
                                         'imagen_Linea_Tiempo_DesbTension': img_Timeline_DesbTension,
                                         'imagen_Linea_Tiempo_DesbCorriente': img_Timeline_DesbCorriente,
@@ -2182,6 +2288,10 @@ if 'correo_electronico' in st.session_state:
                                         #'L31_MIN_PR': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[6]].iloc[0], 2),
                                         #'L31_MED_PR': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[8]].iloc[0], 2),
                                         #'L31_MAX_PR': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[7]].iloc[0], 2),
+                                        'LFF12_MIN_PR': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[0]].iloc[0], 2),
+                                        'LFF12_MED_PR': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[2]].iloc[0], 2),
+                                        'LFF12_MAX_PR': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[1]].iloc[0], 2),
+                                        # Separador
                                         'L1_CORR_MIN_PR': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[0]].iloc[0], 2),
                                         'L1_CORR_MED_PR': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[2]].iloc[0], 2),
                                         'L1_CORR_MAX_PR': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[1]].iloc[0], 2),
@@ -2203,6 +2313,10 @@ if 'correo_electronico' in st.session_state:
                                         #'L31_MIN_MX': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[6]].iloc[3], 2),
                                         #'L31_MED_MX': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[8]].iloc[3], 2),
                                         #'L31_MAX_MX': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[7]].iloc[3], 2),
+                                        'LFF12_MIN_MX': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[0]].iloc[3], 2),
+                                        'LFF12_MED_MX': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[2]].iloc[3], 2),
+                                        'LFF12_MAX_MX': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[1]].iloc[3], 2),
+                                        # Separador
                                         'L1_CORR_MIN_MX': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[0]].iloc[3], 2),
                                         'L1_CORR_MED_MX': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[2]].iloc[3], 2),
                                         'L1_CORR_MAX_MX': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[1]].iloc[3], 2),
@@ -2224,6 +2338,10 @@ if 'correo_electronico' in st.session_state:
                                         #'L31_MIN_PM': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[6]].iloc[1], 2),
                                         #'L31_MED_PM': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[8]].iloc[1], 2),
                                         #'L31_MAX_PM': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[7]].iloc[1], 2),
+                                        'LFF12_MIN_PM': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[0]].iloc[1], 2),
+                                        'LFF12_MED_PM': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[2]].iloc[1], 2),
+                                        'LFF12_MAX_PM': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[1]].iloc[1], 2),
+                                        # Separador
                                         'L1_CORR_MIN_PM': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[0]].iloc[1], 2),
                                         'L1_CORR_MED_PM': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[2]].iloc[1], 2),
                                         'L1_CORR_MAX_PM': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[1]].iloc[1], 2),
@@ -2245,6 +2363,10 @@ if 'correo_electronico' in st.session_state:
                                         #'L31_MIN_MN': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[6]].iloc[2], 2),
                                         #'L31_MED_MN': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[8]].iloc[2], 2),
                                         #'L31_MAX_MN': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[7]].iloc[2], 2),
+                                        'LFF12_MIN_MN': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[0]].iloc[2], 2),
+                                        'LFF12_MED_MN': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[2]].iloc[2], 2),
+                                        'LFF12_MAX_MN': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[1]].iloc[2], 2),
+                                        # Separador
                                         'L1_CORR_MIN_MN': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[0]].iloc[2], 2),
                                         'L1_CORR_MED_MN': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[2]].iloc[2], 2),
                                         'L1_CORR_MAX_MN': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[1]].iloc[2], 2),
@@ -2259,10 +2381,13 @@ if 'correo_electronico' in st.session_state:
                                         'LN_CORR_MAX_MN': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[10]].iloc[2], 2),
                                         'val_Pct_Max_VL1': round(var_Lista_Variaciones[3], 2),
                                         'val_Pct_Max_VL2': round(var_Lista_Variaciones[4], 2),
-                                        'val_Pct_Max_VL3': round(var_Lista_Variaciones[5], 2),
+                                        #'val_Pct_Max_VL3': round(var_Lista_Variaciones[5], 2),
                                         'val_Pct_Min_VL1': round(var_Lista_Variaciones[0], 2),
                                         'val_Pct_Min_VL2': round(var_Lista_Variaciones[1], 2),
-                                        'val_Pct_Min_VL3': round(var_Lista_Variaciones[2], 2),
+                                        #'val_Pct_Min_VL3': round(var_Lista_Variaciones[2], 2),
+                                        'val_Pct_Max_VL12_FF': round(var_Lista_Variaciones_FaseFase[1], 2),
+                                        'val_Pct_Min_VL12_FF': round(var_Lista_Variaciones_FaseFase[0], 2),
+                                        # Separador
                                         'V1_DESBTEN_MED_PR': round(df_Tabla_Calculos_Desb_Tension[listado_Registro_Tension[2]].iloc[0], 2),
                                         'V2_DESBTEN_MED_PR': round(df_Tabla_Calculos_Desb_Tension[listado_Registro_Tension[5]].iloc[0], 2),
                                         'V3_DESBTEN_MED_PR': round(df_Tabla_Calculos_Desb_Tension[listado_Registro_Tension[8]].iloc[0], 2),
@@ -2754,8 +2879,11 @@ if 'correo_electronico' in st.session_state:
                                     
                                     registro = {
                                         'var_Lim_Inf_Tension': round(var_Limite_Inferior_Tension, 2),
+                                        'var_Lim_Inf_Tension_FaseFase': round(var_Limite_Inferior_Tension_FaseFase, 2),
                                         'var_Nominal_Value': round(var1, 2),
+                                        'var_Nominal_Value_FaseFase': round(var_Calculo_Inominal, 2),
                                         'var_Lim_Sup_Tension': round(var_Limite_Superior_Tension, 2),
+                                        'var_Lim_Sup_Tension_FaseFase': round(var_Limite_Superior_Tension_FaseFase, 2),
                                         'var_Cap_Trafo': round(var2, 2),
                                         'var_Corr_Nominal_Value': round(var_Corriente_Nominal_Value, 2),
                                         'nombreCompleto': str(nombreCompleto).upper(),
@@ -2772,6 +2900,7 @@ if 'correo_electronico' in st.session_state:
                                         'anio': str(anio).upper(),
                                         'imgMapsProyecto': imgMapsProyecto,
                                         'imagen_Linea_Tiempo_Tension': img_Timeline_Tension,
+                                        'imagen_Linea_Tiempo_Tension_FaseFase': img_Timeline_Tension_FaseFase,
                                         'imagen_Linea_Tiempo_Corriente': img_Timeline_Corriente,
                                         'imagen_Linea_Tiempo_DesbTension': img_Timeline_DesbTension,
                                         'imagen_Linea_Tiempo_DesbCorriente': img_Timeline_DesbCorriente,
@@ -2796,6 +2925,10 @@ if 'correo_electronico' in st.session_state:
                                         #'L31_MIN_PR': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[6]].iloc[0], 2),
                                         #'L31_MED_PR': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[8]].iloc[0], 2),
                                         #'L31_MAX_PR': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[7]].iloc[0], 2),
+                                        'LFF12_MIN_PR': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[0]].iloc[0], 2),
+                                        'LFF12_MED_PR': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[2]].iloc[0], 2),
+                                        'LFF12_MAX_PR': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[1]].iloc[0], 2),
+                                        # Separador
                                         'L1_CORR_MIN_PR': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[0]].iloc[0], 2),
                                         'L1_CORR_MED_PR': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[2]].iloc[0], 2),
                                         'L1_CORR_MAX_PR': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[1]].iloc[0], 2),
@@ -2817,6 +2950,10 @@ if 'correo_electronico' in st.session_state:
                                         #'L31_MIN_MX': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[6]].iloc[3], 2),
                                         #'L31_MED_MX': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[8]].iloc[3], 2),
                                         #'L31_MAX_MX': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[7]].iloc[3], 2),
+                                        'LFF12_MIN_MX': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[0]].iloc[3], 2),
+                                        'LFF12_MED_MX': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[2]].iloc[3], 2),
+                                        'LFF12_MAX_MX': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[1]].iloc[3], 2),
+                                        # Separador
                                         'L1_CORR_MIN_MX': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[0]].iloc[3], 2),
                                         'L1_CORR_MED_MX': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[2]].iloc[3], 2),
                                         'L1_CORR_MAX_MX': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[1]].iloc[3], 2),
@@ -2838,6 +2975,10 @@ if 'correo_electronico' in st.session_state:
                                         #'L31_MIN_PM': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[6]].iloc[1], 2),
                                         #'L31_MED_PM': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[8]].iloc[1], 2),
                                         #'L31_MAX_PM': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[7]].iloc[1], 2),
+                                        'LFF12_MIN_PM': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[0]].iloc[1], 2),
+                                        'LFF12_MED_PM': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[2]].iloc[1], 2),
+                                        'LFF12_MAX_PM': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[1]].iloc[1], 2),
+                                        # Separador
                                         'L1_CORR_MIN_PM': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[0]].iloc[1], 2),
                                         'L1_CORR_MED_PM': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[2]].iloc[1], 2),
                                         'L1_CORR_MAX_PM': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[1]].iloc[1], 2),
@@ -2859,6 +3000,10 @@ if 'correo_electronico' in st.session_state:
                                         #'L31_MIN_MN': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[6]].iloc[2], 2),
                                         #'L31_MED_MN': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[8]].iloc[2], 2),
                                         #'L31_MAX_MN': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[7]].iloc[2], 2),
+                                        'LFF12_MIN_MN': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[0]].iloc[2], 2),
+                                        'LFF12_MED_MN': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[2]].iloc[2], 2),
+                                        'LFF12_MAX_MN': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[1]].iloc[2], 2),
+                                        # Separador
                                         'L1_CORR_MIN_MN': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[0]].iloc[2], 2),
                                         'L1_CORR_MED_MN': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[2]].iloc[2], 2),
                                         'L1_CORR_MAX_MN': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[1]].iloc[2], 2),
@@ -2877,6 +3022,9 @@ if 'correo_electronico' in st.session_state:
                                         'val_Pct_Min_VL1': round(var_Lista_Variaciones[0], 2),
                                         'val_Pct_Min_VL2': round(var_Lista_Variaciones[1], 2),
                                         #'val_Pct_Min_VL3': round(var_Lista_Variaciones[2], 2),
+                                        'val_Pct_Max_VL12_FF': round(var_Lista_Variaciones_FaseFase[1], 2),
+                                        'val_Pct_Min_VL12_FF': round(var_Lista_Variaciones_FaseFase[0], 2),
+                                        # Separador
                                         'V1_DESBTEN_MED_PR': round(df_Tabla_Calculos_Desb_Tension[listado_Registro_Tension[2]].iloc[0], 2),
                                         'V2_DESBTEN_MED_PR': round(df_Tabla_Calculos_Desb_Tension[listado_Registro_Tension[5]].iloc[0], 2),
                                         #'V3_DESBTEN_MED_PR': round(df_Tabla_Calculos_Desb_Tension[listado_Registro_Tension[8]].iloc[0], 2),
@@ -3368,8 +3516,11 @@ if 'correo_electronico' in st.session_state:
                                     
                                     registro = {
                                         'var_Lim_Inf_Tension': round(var_Limite_Inferior_Tension, 2),
+                                        'var_Lim_Inf_Tension_FaseFase': round(var_Limite_Inferior_Tension_FaseFase, 2),
                                         'var_Nominal_Value': round(var1, 2),
+                                        'var_Nominal_Value_FaseFase': round(var_Calculo_Inominal, 2),
                                         'var_Lim_Sup_Tension': round(var_Limite_Superior_Tension, 2),
+                                        'var_Lim_Sup_Tension_FaseFase': round(var_Limite_Superior_Tension_FaseFase, 2),
                                         'var_Cap_Trafo': round(var2, 2),
                                         'var_Corr_Nominal_Value': round(var_Corriente_Nominal_Value, 2),
                                         'nombreCompleto': str(nombreCompleto).upper(),
@@ -3386,6 +3537,7 @@ if 'correo_electronico' in st.session_state:
                                         'anio': str(anio).upper(),
                                         'imgMapsProyecto': imgMapsProyecto,
                                         'imagen_Linea_Tiempo_Tension': img_Timeline_Tension,
+                                        'imagen_Linea_Tiempo_Tension_FaseFase': img_Timeline_Tension_FaseFase,
                                         'imagen_Linea_Tiempo_Corriente': img_Timeline_Corriente,
                                         'imagen_Linea_Tiempo_DesbTension': img_Timeline_DesbTension,
                                         'imagen_Linea_Tiempo_DesbCorriente': img_Timeline_DesbCorriente,
@@ -3410,6 +3562,10 @@ if 'correo_electronico' in st.session_state:
                                         #'L31_MIN_PR': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[6]].iloc[0], 2),
                                         #'L31_MED_PR': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[8]].iloc[0], 2),
                                         #'L31_MAX_PR': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[7]].iloc[0], 2),
+                                        'LFF12_MIN_PR': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[0]].iloc[0], 2),
+                                        'LFF12_MED_PR': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[2]].iloc[0], 2),
+                                        'LFF12_MAX_PR': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[1]].iloc[0], 2),
+                                        # Separador
                                         'L1_CORR_MIN_PR': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[0]].iloc[0], 2),
                                         'L1_CORR_MED_PR': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[2]].iloc[0], 2),
                                         'L1_CORR_MAX_PR': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[1]].iloc[0], 2),
@@ -3431,6 +3587,10 @@ if 'correo_electronico' in st.session_state:
                                         #'L31_MIN_MX': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[6]].iloc[3], 2),
                                         #'L31_MED_MX': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[8]].iloc[3], 2),
                                         #'L31_MAX_MX': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[7]].iloc[3], 2),
+                                        'LFF12_MIN_MX': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[0]].iloc[3], 2),
+                                        'LFF12_MED_MX': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[2]].iloc[3], 2),
+                                        'LFF12_MAX_MX': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[1]].iloc[3], 2),
+                                        # Separador
                                         'L1_CORR_MIN_MX': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[0]].iloc[3], 2),
                                         'L1_CORR_MED_MX': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[2]].iloc[3], 2),
                                         'L1_CORR_MAX_MX': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[1]].iloc[3], 2),
@@ -3452,6 +3612,10 @@ if 'correo_electronico' in st.session_state:
                                         #'L31_MIN_PM': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[6]].iloc[1], 2),
                                         #'L31_MED_PM': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[8]].iloc[1], 2),
                                         #'L31_MAX_PM': round(df_Tabla_Calculos_Tension[listado_Registro_Tension[7]].iloc[1], 2),
+                                        'LFF12_MIN_PM': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[0]].iloc[1], 2),
+                                        'LFF12_MED_PM': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[2]].iloc[1], 2),
+                                        'LFF12_MAX_PM': round(df_Tabla_Calculos_Tension_FaseFase[listado_Registro_Tension_FaseFase[1]].iloc[1], 2),
+                                        # Separador
                                         'L1_CORR_MIN_PM': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[0]].iloc[1], 2),
                                         'L1_CORR_MED_PM': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[2]].iloc[1], 2),
                                         'L1_CORR_MAX_PM': round(df_Tabla_Calculos_Corriente[listado_Registro_Corriente[1]].iloc[1], 2),
@@ -3491,6 +3655,9 @@ if 'correo_electronico' in st.session_state:
                                         'val_Pct_Min_VL1': round(var_Lista_Variaciones[0], 2),
                                         'val_Pct_Min_VL2': round(var_Lista_Variaciones[1], 2),
                                         #'val_Pct_Min_VL3': round(var_Lista_Variaciones[2], 2),
+                                        'val_Pct_Max_VL12_FF': round(var_Lista_Variaciones_FaseFase[1], 2),
+                                        'val_Pct_Min_VL12_FF': round(var_Lista_Variaciones_FaseFase[0], 2),
+                                        # Separador
                                         'V1_DESBTEN_MED_PR': round(df_Tabla_Calculos_Desb_Tension[listado_Registro_Tension[2]].iloc[0], 2),
                                         'V2_DESBTEN_MED_PR': round(df_Tabla_Calculos_Desb_Tension[listado_Registro_Tension[5]].iloc[0], 2),
                                         #'V3_DESBTEN_MED_PR': round(df_Tabla_Calculos_Desb_Tension[listado_Registro_Tension[8]].iloc[0], 2),
